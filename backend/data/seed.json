@@ -1,1 +1,853 @@
-
+[
+ {
+  "id": "bass",
+  "name": "BASS",
+  "full_name": "Burning and Suppression of Solids",
+  "family": "BASS",
+  "hardware_family": "MSG flow duct",
+  "hardware": "Microgravity Science Glovebox (MSG) + SPICE fan-driven flow duct",
+  "facility": "ISS",
+  "fuel_type": "solid",
+  "fuels": "Solid fabric and plastic samples",
+  "fuel_geometry": "Flat and cylindrical samples (sizes to verify in PSI)",
+  "objective": "Measures how flammability of solid materials depends on oxygen concentration and air flow in microgravity, and how those flames are suppressed. Foundation for spacecraft material selection.",
+  "tier": "direct",
+  "informs": [
+   "material_selection",
+   "atmosphere_limits",
+   "suppression_systems",
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": "Oxygen varied; exact range to be verified in PSI",
+  "pressure_psi": null,
+  "airflow": "Fan-driven flow, speed varied",
+  "gravity": "microgravity",
+  "tags": [
+   "solid",
+   "o2_variation",
+   "flow_variation",
+   "material_flammability"
+  ],
+  "prevention": 3,
+  "detection": 0,
+  "suppression": 1,
+  "variables": [
+   "Oxygen concentration",
+   "Airflow speed",
+   "Sample material and geometry"
+  ],
+  "sensors": [
+   "Flame imaging (video)",
+   "Temperature measurements"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "bass-ii",
+  "name": "BASS-II",
+  "full_name": "Burning and Suppression of Solids II",
+  "family": "BASS",
+  "hardware_family": "MSG flow duct",
+  "hardware": "Microgravity Science Glovebox (MSG) + SPICE fan-driven flow duct",
+  "facility": "ISS",
+  "fuel_type": "solid",
+  "fuels": "Solid fabric and plastic samples",
+  "fuel_geometry": "Solid samples (sizes to verify in PSI)",
+  "objective": "Follow-on to BASS extending solid-material flammability and suppression tests in the same flow duct.",
+  "tier": "direct",
+  "informs": [
+   "material_selection",
+   "atmosphere_limits",
+   "suppression_systems",
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": "Oxygen varied; exact range to be verified in PSI",
+  "pressure_psi": null,
+  "airflow": "Fan-driven flow, speed varied",
+  "gravity": "microgravity",
+  "tags": [
+   "solid",
+   "o2_variation",
+   "flow_variation",
+   "material_flammability"
+  ],
+  "prevention": 3,
+  "detection": 0,
+  "suppression": 1,
+  "variables": [
+   "Oxygen concentration",
+   "Airflow speed",
+   "Sample material and geometry"
+  ],
+  "sensors": [
+   "Flame imaging (video)",
+   "Temperature measurements"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "saffire-i",
+  "name": "Saffire-I",
+  "full_name": "Spacecraft Fire Safety Demonstration I",
+  "family": "Saffire",
+  "hardware_family": "Saffire module",
+  "hardware": "Saffire large-scale flow-duct experiment module",
+  "facility": "Cygnus resupply vehicle (unmanned)",
+  "fuel_type": "solid",
+  "fuels": "Large solid material sample",
+  "fuel_geometry": "Large sample in a flow duct (size to verify in PSI)",
+  "objective": "First large-scale, spacecraft-relevant fire test, beyond the sample sizes possible inside ISS facilities, to validate small-scale flammability data.",
+  "tier": "direct",
+  "informs": [
+   "material_selection",
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "solid",
+   "spacecraft_scale",
+   "material_flammability",
+   "flow_variation"
+  ],
+  "prevention": 3,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Material",
+   "Airflow speed",
+   "Sample scale"
+  ],
+  "sensors": [
+   "Flame imaging (video)",
+   "Temperature measurements"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "saffire-ii",
+  "name": "Saffire-II",
+  "full_name": "Spacecraft Fire Safety Demonstration II",
+  "family": "Saffire",
+  "hardware_family": "Saffire module",
+  "hardware": "Saffire large-scale flow-duct experiment module",
+  "facility": "Cygnus resupply vehicle (unmanned)",
+  "fuel_type": "solid",
+  "fuels": "Large solid material samples",
+  "fuel_geometry": "Large samples in a flow duct (sizes to verify in PSI)",
+  "objective": "Follow-on large-scale fire test with additional materials and conditions.",
+  "tier": "direct",
+  "informs": [
+   "material_selection",
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "solid",
+   "spacecraft_scale",
+   "material_flammability",
+   "flow_variation"
+  ],
+  "prevention": 3,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Material",
+   "Airflow speed",
+   "Sample scale"
+  ],
+  "sensors": [
+   "Flame imaging (video)",
+   "Temperature measurements"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "saffire-iii",
+  "name": "Saffire-III",
+  "full_name": "Spacecraft Fire Safety Demonstration III",
+  "family": "Saffire",
+  "hardware_family": "Saffire module",
+  "hardware": "Saffire large-scale flow-duct experiment module",
+  "facility": "Cygnus resupply vehicle (unmanned)",
+  "fuel_type": "solid",
+  "fuels": "Large solid material samples",
+  "fuel_geometry": "Large samples in a flow duct (sizes to verify in PSI)",
+  "objective": "Further large-scale fire test extending material and condition coverage.",
+  "tier": "direct",
+  "informs": [
+   "material_selection",
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "solid",
+   "spacecraft_scale",
+   "material_flammability",
+   "flow_variation"
+  ],
+  "prevention": 3,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Material",
+   "Airflow speed",
+   "Sample scale"
+  ],
+  "sensors": [
+   "Flame imaging (video)",
+   "Temperature measurements"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "same",
+  "name": "SAME",
+  "full_name": "Smoke and Aerosol Measurement Experiment",
+  "family": "SAME",
+  "hardware_family": "Smoke & aerosol instrument",
+  "hardware": "Smoke and aerosol measurement instrument",
+  "facility": "ISS",
+  "fuel_type": "aerosol",
+  "fuels": "Smoke particles from heated spacecraft-like materials",
+  "fuel_geometry": null,
+  "objective": "Measures smoke particle size and concentration in microgravity to support the design of spacecraft smoke detectors.",
+  "tier": "direct",
+  "informs": [
+   "smoke_detection"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "smoke",
+   "aerosol",
+   "detection"
+  ],
+  "prevention": 0,
+  "detection": 3,
+  "suppression": 0,
+  "variables": [
+   "Material",
+   "Smoke generation conditions"
+  ],
+  "sensors": [
+   "Smoke particle size/concentration instrument"
+  ],
+  "earth_application": "NASA smoke detector work discriminating smoke from dust reduced nuisance alarms on Earth.",
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "same-r",
+  "name": "SAME-R",
+  "full_name": "Smoke and Aerosol Measurement Experiment - Reflight",
+  "family": "SAME",
+  "hardware_family": "Smoke & aerosol instrument",
+  "hardware": "Smoke and aerosol measurement instrument",
+  "facility": "ISS",
+  "fuel_type": "aerosol",
+  "fuels": "Smoke particles from heated spacecraft-like materials",
+  "fuel_geometry": null,
+  "objective": "Reflight of SAME extending smoke measurements in microgravity for detector design.",
+  "tier": "direct",
+  "informs": [
+   "smoke_detection"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "smoke",
+   "aerosol",
+   "detection"
+  ],
+  "prevention": 0,
+  "detection": 3,
+  "suppression": 0,
+  "variables": [
+   "Material",
+   "Smoke generation conditions"
+  ],
+  "sensors": [
+   "Smoke particle size/concentration instrument"
+  ],
+  "earth_application": "NASA smoke detector work discriminating smoke from dust reduced nuisance alarms on Earth.",
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "daft",
+  "name": "DAFT",
+  "full_name": "Dust and Aerosol Measurement Feasibility Test",
+  "family": "DAFT",
+  "hardware_family": "Smoke & aerosol instrument",
+  "hardware": "Smoke and aerosol measurement instrument (same instrument as SAME)",
+  "facility": "ISS",
+  "fuel_type": "aerosol",
+  "fuels": "Dust (non-combustion)",
+  "fuel_geometry": null,
+  "objective": "Uses the SAME smoke instrument to detect dust, informing how detectors can tell dust from smoke and avoid nuisance alarms.",
+  "tier": "related",
+  "informs": [
+   "smoke_detection"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "dust",
+   "aerosol",
+   "detection"
+  ],
+  "prevention": 0,
+  "detection": 1,
+  "suppression": 0,
+  "variables": [
+   "Dust type and concentration"
+  ],
+  "sensors": [
+   "Smoke particle size/concentration instrument"
+  ],
+  "earth_application": "Dust-versus-smoke discrimination applies to terrestrial settings such as mining.",
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "daft-2",
+  "name": "DAFT-2",
+  "full_name": "Dust and Aerosol Measurement Feasibility Test 2",
+  "family": "DAFT",
+  "hardware_family": "Smoke & aerosol instrument",
+  "hardware": "Smoke and aerosol measurement instrument (same instrument as SAME)",
+  "facility": "ISS",
+  "fuel_type": "aerosol",
+  "fuels": "Dust (non-combustion)",
+  "fuel_geometry": null,
+  "objective": "Follow-on dust measurement tests with the SAME instrument.",
+  "tier": "related",
+  "informs": [
+   "smoke_detection"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "dust",
+   "aerosol",
+   "detection"
+  ],
+  "prevention": 0,
+  "detection": 1,
+  "suppression": 0,
+  "variables": [
+   "Dust type and concentration"
+  ],
+  "sensors": [
+   "Smoke particle size/concentration instrument"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "flex",
+  "name": "FLEX",
+  "full_name": "Flame Extinguishment Experiment",
+  "family": "FLEX",
+  "hardware_family": "MDCA / CIR",
+  "hardware": "Multi-user Droplet Combustion Apparatus (MDCA) in Combustion Integrated Rack (CIR)",
+  "facility": "ISS",
+  "fuel_type": "liquid",
+  "fuels": "Burning liquid fuel droplets",
+  "fuel_geometry": "Single suspended droplet (size to verify in PSI)",
+  "objective": "Tests fire suppression by diluting the chamber atmosphere with carbon dioxide and helium, both of which suppress fire.",
+  "tier": "direct",
+  "informs": [
+   "suppression_systems"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "liquid",
+   "diluent",
+   "suppression"
+  ],
+  "prevention": 0,
+  "detection": 0,
+  "suppression": 3,
+  "variables": [
+   "Diluent gas (CO2, He)",
+   "Atmosphere composition",
+   "Droplet size"
+  ],
+  "sensors": [
+   "Flame imaging (video)",
+   "Temperature measurements"
+  ],
+  "earth_application": "Fine water-mist extinguishers developed for ISS have Earth applications.",
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "flex-2",
+  "name": "FLEX-2",
+  "full_name": "Flame Extinguishment Experiment 2",
+  "family": "FLEX",
+  "hardware_family": "MDCA / CIR",
+  "hardware": "Multi-user Droplet Combustion Apparatus (MDCA) in Combustion Integrated Rack (CIR)",
+  "facility": "ISS",
+  "fuel_type": "liquid",
+  "fuels": "Burning liquid fuel droplets",
+  "fuel_geometry": "Single suspended droplet (size to verify in PSI)",
+  "objective": "Follow-on suppression experiments with droplet flames in diluted atmospheres.",
+  "tier": "direct",
+  "informs": [
+   "suppression_systems"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "liquid",
+   "diluent",
+   "suppression"
+  ],
+  "prevention": 0,
+  "detection": 0,
+  "suppression": 3,
+  "variables": [
+   "Diluent gas (CO2, He)",
+   "Atmosphere composition",
+   "Droplet size"
+  ],
+  "sensors": [
+   "Flame imaging (video)",
+   "Temperature measurements"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "cfi",
+  "name": "CFI",
+  "full_name": "Cool Flames Investigation",
+  "family": "CFI",
+  "hardware_family": "MDCA / CIR",
+  "hardware": "Multi-user Droplet Combustion Apparatus (MDCA) in Combustion Integrated Rack (CIR)",
+  "facility": "ISS",
+  "fuel_type": "liquid",
+  "fuels": "Burning liquid fuel droplets",
+  "fuel_geometry": "Single suspended droplet (size to verify in PSI)",
+  "objective": "Studies low-temperature cool flames of droplets. Relevant to fire safety but less directly than solid-material flammability.",
+  "tier": "indirect",
+  "informs": [
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "liquid",
+   "cool_flames",
+   "fundamentals"
+  ],
+  "prevention": 1,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Fuel",
+   "Droplet size",
+   "Atmosphere"
+  ],
+  "sensors": [
+   "Flame imaging (video)"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "cfi-g",
+  "name": "CFI-G",
+  "full_name": "Cool Flames Investigation with Gases (ACME)",
+  "family": "ACME",
+  "hardware_family": "ACME / CIR",
+  "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
+  "facility": "ISS",
+  "fuel_type": "gas",
+  "fuels": "Flammable gas (e.g. propane) in nitrogen; oxygen-nitrogen oxidizer",
+  "fuel_geometry": "Spherical burner; oxidizer flows out of the burner into the fuel-filled chamber (inside-out flame)",
+  "objective": "Highest-oxygen microgravity tests in PSI, with oxidizer up to 85% oxygen. Directly bounds the oxygen-enriched atmospheres expected in a Moon Base and pressurized rovers.",
+  "tier": "related",
+  "informs": [
+   "atmosphere_limits",
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": 85,
+  "o2_note": "Up to 85% oxygen",
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "gas",
+   "high_o2",
+   "o2_variation",
+   "cool_flames"
+  ],
+  "prevention": 2,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Oxygen fraction of oxidizer",
+   "Fuel"
+  ],
+  "sensors": [
+   "Flame imaging (video)"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": [
+   {
+    "o2_pct": 85,
+    "note": "Maximum oxidizer oxygen fraction (challenge brief)"
+   }
+  ]
+ },
+ {
+  "id": "bre",
+  "name": "BRE",
+  "full_name": "Burning Rate Emulator (ACME)",
+  "family": "ACME",
+  "hardware_family": "ACME / CIR",
+  "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
+  "facility": "ISS",
+  "fuel_type": "gas",
+  "fuels": "Gaseous fuel emulating solid-material burning",
+  "fuel_geometry": null,
+  "objective": "Studies materials flammability in still atmospheres as a function of material properties, using gaseous fuels.",
+  "tier": "related",
+  "informs": [
+   "material_selection",
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": "Still atmosphere",
+  "gravity": "microgravity",
+  "tags": [
+   "gas",
+   "material_flammability",
+   "still_air"
+  ],
+  "prevention": 2,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Material properties emulated"
+  ],
+  "sensors": [
+   "Flame imaging (video)"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "e-field",
+  "name": "E-FIELD Flames",
+  "full_name": "Electric-Field Effects on Laminar Diffusion Flames (ACME)",
+  "family": "ACME",
+  "hardware_family": "ACME / CIR",
+  "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
+  "facility": "ISS",
+  "fuel_type": "gas",
+  "fuels": "Gaseous fuels",
+  "fuel_geometry": null,
+  "objective": "Uses electric fields on flame ions to mimic partial gravity. Closest analogue to Moon/Mars gravity in PSI; no true partial-gravity data exists yet.",
+  "tier": "related",
+  "informs": [
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "gas",
+   "partial_g_analog"
+  ],
+  "prevention": 1,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Electric field strength"
+  ],
+  "sensors": [
+   "Flame imaging (video)"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "cld-flame",
+  "name": "CLD Flame",
+  "full_name": "Coflow Laminar Diffusion Flame (ACME)",
+  "family": "ACME",
+  "hardware_family": "ACME / CIR",
+  "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
+  "facility": "ISS",
+  "fuel_type": "gas",
+  "fuels": "Gaseous fuels",
+  "fuel_geometry": null,
+  "objective": "Fundamental gaseous-flame experiment in the ACME project; indirect relevance to fire safety (details to verify in PSI).",
+  "tier": "indirect",
+  "informs": [
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "gas",
+   "fundamentals"
+  ],
+  "prevention": 1,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Fuel",
+   "Flow conditions"
+  ],
+  "sensors": [
+   "Flame imaging (video)"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "s-flame",
+  "name": "s-Flame",
+  "full_name": "Structure and Response of Spherical Diffusion Flames (ACME)",
+  "family": "ACME",
+  "hardware_family": "ACME / CIR",
+  "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
+  "facility": "ISS",
+  "fuel_type": "gas",
+  "fuels": "Gaseous fuels",
+  "fuel_geometry": "Spherical burner",
+  "objective": "Fundamental gaseous-flame experiment in the ACME project; indirect relevance to fire safety (details to verify in PSI).",
+  "tier": "indirect",
+  "informs": [
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "gas",
+   "fundamentals"
+  ],
+  "prevention": 1,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Fuel",
+   "Flow conditions"
+  ],
+  "sensors": [
+   "Flame imaging (video)"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "flame-design",
+  "name": "Flame Design",
+  "full_name": "Flame Design (ACME)",
+  "family": "ACME",
+  "hardware_family": "ACME / CIR",
+  "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
+  "facility": "ISS",
+  "fuel_type": "gas",
+  "fuels": "Gaseous fuels",
+  "fuel_geometry": null,
+  "objective": "Fundamental gaseous-flame experiment in the ACME project; indirect relevance to fire safety (details to verify in PSI).",
+  "tier": "indirect",
+  "informs": [
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "gas",
+   "fundamentals"
+  ],
+  "prevention": 1,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Fuel",
+   "Flow conditions"
+  ],
+  "sensors": [
+   "Flame imaging (video)"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "spice",
+  "name": "SPICE",
+  "full_name": "Smoke Point In Co-flow Experiment",
+  "family": "SPICE",
+  "hardware_family": "MSG flow duct",
+  "hardware": "Microgravity Science Glovebox (MSG) + SPICE fan-driven flow duct",
+  "facility": "ISS",
+  "fuel_type": "gas",
+  "fuels": "Gaseous fuel (co-flow burner)",
+  "fuel_geometry": "Co-flow burner",
+  "objective": "Determines smoke point and soot production of gaseous flames in microgravity, relevant to smoke generation and detection.",
+  "tier": "indirect",
+  "informs": [
+   "smoke_detection",
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "gas",
+   "soot",
+   "flow_variation"
+  ],
+  "prevention": 1,
+  "detection": 1,
+  "suppression": 0,
+  "variables": [
+   "Fuel flow",
+   "Co-flow velocity"
+  ],
+  "sensors": [
+   "Flame imaging (video)",
+   "Soot measurements"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ },
+ {
+  "id": "slice",
+  "name": "SLICE",
+  "full_name": "Structure & Liftoff In Combustion Experiment",
+  "family": "SLICE",
+  "hardware_family": "MSG flow duct",
+  "hardware": "Microgravity Science Glovebox (MSG) + SPICE fan-driven flow duct",
+  "facility": "ISS",
+  "fuel_type": "gas",
+  "fuels": "Gaseous fuel jet flames",
+  "fuel_geometry": "Jet burner",
+  "objective": "Studies flame structure and liftoff of gaseous flames; fundamental, indirect relevance to fire safety.",
+  "tier": "indirect",
+  "informs": [
+   "fire_modeling"
+  ],
+  "o2_min": null,
+  "o2_max": null,
+  "o2_note": null,
+  "pressure_psi": null,
+  "airflow": null,
+  "gravity": "microgravity",
+  "tags": [
+   "gas",
+   "flame_structure",
+   "flow_variation"
+  ],
+  "prevention": 1,
+  "detection": 0,
+  "suppression": 0,
+  "variables": [
+   "Fuel flow",
+   "Co-flow velocity"
+  ],
+  "sensors": [
+   "Flame imaging (video)"
+  ],
+  "earth_application": null,
+  "source_url": "https://psi.nasa.gov/",
+  "conditions": []
+ }
+]
