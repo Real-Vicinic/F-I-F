@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Flame in Freefall API
+
+Parameters:
+  Stage: {Type: String, Default: dev, AllowedValues: [dev, prod]}
+  DatabaseUrl: {Type: String, NoEcho: true}
+  GroqApiKeys: {Type: String, NoEcho: true, Default: ""}
+  GroqModel: {Type: String, Default: llama-3.3-70b-versatile}
+  AllowedOrigin: {Type: String, Default: "*"}
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Timeout: 25
+    MemorySize: 512
+
+Resources:
+  Api:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Stage
+      Cors:
+        AllowOrigin: !Sub "'${AllowedOrigin}'"
+        AllowHeaders: "'Content-Type'"
+        AllowMethods: "'GET,POST,OPTIONS'"
+
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: app.handler
+      Environment:
+        Variables:
+          DATABASE_URL: !Ref DatabaseUrl
+          GROQ_API_KEYS: !Ref GroqApiKeys
+          GROQ_MODEL: !Ref GroqModel
+          ALLOWED_ORIGIN: !Ref AllowedOrigin
+      Events:
+        Proxy:
+          Type: Api
+          Properties: {RestApiId: !Ref Api, Path: "/{proxy+}", Method: ANY}
+
+Outputs:
+  ApiUrl:
+    Value: !Sub "https://${Api}.execute-api.${AWS::Region}.amazonaws.com/${Stage}"

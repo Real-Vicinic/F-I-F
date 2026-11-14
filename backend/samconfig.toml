@@ -1,0 +1,13 @@
+version = 0.1
+
+[dev.deploy.parameters]
+stack_name = "flame-in-freefall-dev"
+region = "eu-west-1"
+capabilities = "CAPABILITY_IAM"
+resolve_s3 = true
+
+[prod.deploy.parameters]
+stack_name = "flame-in-freefall-prod"
+region = "eu-west-1"
+capabilities = "CAPABILITY_IAM"
+resolve_s3 = true
