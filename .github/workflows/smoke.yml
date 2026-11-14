@@ -1,0 +1,48 @@
+name: smoke
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        options: [prod, dev]
+        default: prod
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment || 'prod' }}
+    env:
+      STAGE: ${{ inputs.environment || 'prod' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: backend/scripts
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION || 'eu-west-1' }}
+      - name: Find API URL
+        id: api
+        run: |
+          URL=$(aws cloudformation describe-stacks --stack-name "flame-in-freefall-$STAGE" \
+            --query "Stacks[0].Outputs[?OutputKey=='ApiUrl'].OutputValue" --output text 2>/dev/null || true)
+          if [ -z "$URL" ] || [ "$URL" = "None" ]; then
+            echo "::notice::Stack for $STAGE not deployed yet, skipping"; echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "url=$URL" >> "$GITHUB_OUTPUT"
+          fi
+      - name: API smoke test
+        if: steps.api.outputs.skip != 'true'
+        env:
+          API_URL: ${{ steps.api.outputs.url }}
+        run: python backend/scripts/smoke_test.py
+      - name: Site check
+        if: steps.api.outputs.skip != 'true' && vars.SITE_URL != ''
+        run: curl -fsS -o /dev/null "${{ vars.SITE_URL }}"

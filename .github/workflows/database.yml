@@ -1,0 +1,33 @@
+name: database
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment (Neon branch)
+        type: choice
+        options: [dev, prod]
+        default: dev
+      seed:
+        description: Run seed.py after migrations
+        type: boolean
+        default: true
+
+jobs:
+  db:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    env:
+      DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r src/requirements.txt
+      - run: python scripts/migrate.py
+      - if: ${{ inputs.seed }}
+        run: python scripts/seed.py
