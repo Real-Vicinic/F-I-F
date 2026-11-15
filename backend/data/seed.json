@@ -44,7 +44,7 @@
       "Temperature measurements"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
     "conditions": [],
     "psi_id": "PSI-26"
   },
@@ -92,7 +92,7 @@
       "Temperature measurements"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
     "conditions": [],
     "psi_id": "PSI-25"
   },
@@ -138,7 +138,7 @@
       "Temperature measurements"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
     "conditions": [],
     "psi_id": "PSI-98"
   },
@@ -184,7 +184,7 @@
       "Temperature measurements"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
     "conditions": [],
     "psi_id": "PSI-99"
   },
@@ -230,7 +230,7 @@
       "Temperature measurements"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100",
     "conditions": [],
     "psi_id": "PSI-100"
   },
@@ -272,7 +272,7 @@
       "Smoke particle size/concentration instrument"
     ],
     "earth_application": "NASA smoke detector work discriminating smoke from dust reduced nuisance alarms on Earth.",
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102",
     "conditions": [],
     "psi_id": "PSI-102"
   },
@@ -314,7 +314,7 @@
       "Smoke particle size/concentration instrument"
     ],
     "earth_application": "NASA smoke detector work discriminating smoke from dust reduced nuisance alarms on Earth.",
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
     "conditions": [],
     "psi_id": "PSI-101"
   },
@@ -355,7 +355,7 @@
       "Smoke particle size/concentration instrument"
     ],
     "earth_application": "Dust-versus-smoke discrimination applies to terrestrial settings such as mining.",
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-47",
     "conditions": [],
     "psi_id": "PSI-47"
   },
@@ -396,7 +396,7 @@
       "Smoke particle size/concentration instrument"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-47",
     "conditions": [],
     "psi_id": "PSI-47"
   },
@@ -440,7 +440,7 @@
       "Temperature measurements"
     ],
     "earth_application": "Fine water-mist extinguishers developed for ISS have Earth applications.",
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69",
     "conditions": [],
     "psi_id": "PSI-69"
   },
@@ -484,7 +484,7 @@
       "Temperature measurements"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-68",
     "conditions": [],
     "psi_id": "PSI-68"
   },
@@ -527,7 +527,7 @@
       "Flame imaging (video)"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
     "conditions": [],
     "psi_id": "PSI-39"
   },
@@ -571,7 +571,7 @@
       "Flame imaging (video)"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159",
     "conditions": [
       {
         "o2_pct": 85,
@@ -618,7 +618,7 @@
       "Flame imaging (video)"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-20",
     "conditions": [],
     "psi_id": "PSI-20"
   },
@@ -661,7 +661,7 @@
       "Flame response time to electric forcing"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-22",
     "conditions": [],
     "psi_id": "PSI-22"
   },
@@ -702,7 +702,7 @@
       "Flame imaging (video)"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-21",
     "conditions": [],
     "psi_id": "PSI-21"
   },
@@ -743,7 +743,7 @@
       "Flame imaging (video)"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-23",
     "conditions": [],
     "psi_id": "PSI-23"
   },
@@ -785,7 +785,7 @@
       "Flame imaging (video)"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-10",
     "conditions": [],
     "psi_id": "PSI-10"
   },
@@ -829,7 +829,7 @@
       "Soot measurements"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-107",
     "conditions": [],
     "psi_id": "PSI-107"
   },
@@ -871,7 +871,7 @@
       "Flame imaging (video)"
     ],
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-106",
     "conditions": [],
     "psi_id": "PSI-106"
   },
@@ -908,7 +908,7 @@
     "detection": 0,
     "suppression": 1,
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-117",
     "variables": [
       "Thermal and convective perturbation"
     ],
@@ -951,7 +951,7 @@
     "detection": 0,
     "suppression": 0,
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-62",
     "variables": [
       "Flame spread conditions"
     ],
@@ -994,7 +994,7 @@
     "detection": 1,
     "suppression": 0,
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-60",
     "variables": [
       "Soot formation in 1g vs 0g"
     ],
@@ -1039,7 +1039,7 @@
     "detection": 0,
     "suppression": 1,
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-142",
     "variables": [
       "Oxygen concentration"
     ],
@@ -1082,7 +1082,7 @@
     "detection": 1,
     "suppression": 0,
     "earth_application": null,
-    "source_url": "https://psi.nasa.gov/",
+    "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-115",
     "variables": [
       "Gravity level"
     ],
