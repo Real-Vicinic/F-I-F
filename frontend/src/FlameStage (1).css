@@ -1,0 +1,117 @@
+.flame-stage {
+  --speed: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 40px;
+  padding: 14px 0 10px;
+  margin: 0;
+  border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  flex: none;
+}
+.flame-stage.is-busy {
+  --speed: 2.2;
+}
+.flame-stage.is-compact {
+  padding: 6px 0;
+  margin: 0;
+  gap: 28px;
+}
+.flame-stage.is-compact svg {
+  width: 42px;
+  height: 49px;
+}
+.flame-stage.is-compact figcaption {
+  display: none;
+}
+
+.flame-fig {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  max-width: 140px;
+  text-align: center;
+}
+.flame-fig svg {
+  width: 84px;
+  height: 98px;
+  overflow: visible;
+}
+.flame-fig figcaption {
+  font-size: 11px;
+  line-height: 1.3;
+  color: #9a9aa3;
+}
+
+/* every animated part scales from its own base */
+.fs-flick,
+.fs-breathe,
+.fs-halo,
+.fs-earth-glow,
+.fs-micro-glow {
+  transform-box: fill-box;
+}
+.fs-flick {
+  transform-origin: 50% 100%;
+}
+.fs-breathe,
+.fs-halo,
+.fs-micro-glow,
+.fs-earth-glow {
+  transform-origin: 50% 50%;
+}
+
+/* Earth flame: tall, swaying, flickering */
+.fs-a { animation: fs-flicker-a calc(1.9s / var(--speed)) ease-in-out infinite; }
+.fs-b { animation: fs-flicker-b calc(1.3s / var(--speed)) ease-in-out infinite; }
+.fs-c { animation: fs-flicker-c calc(0.9s / var(--speed)) ease-in-out infinite; }
+.fs-earth-glow { animation: fs-glow calc(1.6s / var(--speed)) ease-in-out infinite; }
+
+@keyframes fs-flicker-a {
+  0%, 100% { transform: scale(1, 1) skewX(0deg); }
+  25% { transform: scale(0.96, 1.06) skewX(-2.5deg); }
+  50% { transform: scale(1.03, 0.97) skewX(2deg); }
+  75% { transform: scale(0.98, 1.04) skewX(-1deg); }
+}
+@keyframes fs-flicker-b {
+  0%, 100% { transform: scale(1, 1) skewX(0deg); }
+  30% { transform: scale(1.04, 0.95) skewX(3deg); }
+  60% { transform: scale(0.95, 1.08) skewX(-3deg); }
+}
+@keyframes fs-flicker-c {
+  0%, 100% { transform: scale(1, 1); }
+  40% { transform: scale(0.9, 1.12); }
+  70% { transform: scale(1.08, 0.92); }
+}
+@keyframes fs-glow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.1); }
+}
+
+/* Microgravity flame: round, steady, slow breathing, no sway */
+.fs-d { animation: fs-breathe calc(3.6s / var(--speed)) ease-in-out infinite; }
+.fs-e { animation: fs-breathe calc(3s / var(--speed)) ease-in-out infinite reverse; }
+.fs-f { animation: fs-breathe calc(2.4s / var(--speed)) ease-in-out infinite; }
+.fs-micro-glow { opacity: 0.3; animation: fs-glow calc(3.6s / var(--speed)) ease-in-out infinite; }
+.fs-halo { animation: fs-halo calc(4s / var(--speed)) ease-out infinite; }
+
+@keyframes fs-breathe {
+  0%, 100% { transform: scale(0.96); }
+  50% { transform: scale(1.04); }
+}
+@keyframes fs-halo {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-flick,
+  .fs-breathe,
+  .fs-halo,
+  .fs-earth-glow,
+  .fs-micro-glow {
+    animation: none;
+  }
+}
