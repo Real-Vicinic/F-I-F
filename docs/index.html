@@ -5,7 +5,7 @@
 :root{--d:#14161f;--l:#f6f3ee;--o:#ef6c1a;--b:#3d8bff;--g:#8a8f9e;--t:#1b1d27}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%;background:#000;overflow:hidden;font-family:Calibri,Segoe UI,Arial,sans-serif}
-#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:0 0}
+#stage{position:fixed;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
 .s{position:absolute;inset:0;padding:56px 64px;display:none;background:var(--l);color:var(--t)}
 .s.on{display:block}.s.dark{background:var(--d);color:#fff}
 h1,h2{font-family:Cambria,Georgia,serif}
@@ -37,9 +37,10 @@ td{padding:11px 16px;border-bottom:1px solid #e2ddd4}tr:nth-child(odd) td{backgr
 a{color:#7fb2ff;word-break:break-all}.n{position:absolute;right:30px;bottom:18px;color:var(--g);font-size:16px}
 #bar{position:fixed;left:0;bottom:0;height:4px;background:var(--o);width:0;transition:width .2s}
 .nav{position:fixed;top:50%;transform:translateY(-50%);width:48px;height:96px;border:0;border-radius:14px;background:rgba(239,108,26,.9);color:#fff;font-size:44px;line-height:1;cursor:pointer;z-index:5;box-shadow:0 4px 16px #0006;display:none}.nav:hover{background:#ff7d2e}#prev{left:6px}#next{right:6px}@media(max-width:700px){.nav{width:44px;height:72px;font-size:36px}}
+#rot{display:none;position:fixed;left:0;right:0;bottom:24px;text-align:center;color:#fffa;font:15px Arial;z-index:6}
 #hint{position:fixed;right:12px;top:8px;color:#fff6;font:12px Arial}
 </style></head><body>
-<div id="stage"></div><div id="bar"></div><button class="nav" id="prev" aria-label="Previous slide">&#8249;</button><button class="nav" id="next" aria-label="Next slide">&#8250;</button><div id="hint">← → navigate · F fullscreen</div>
+<div id="stage"></div><div id="bar"></div><button class="nav" id="prev" aria-label="Previous slide">&#8249;</button><button class="nav" id="next" aria-label="Next slide">&#8250;</button><div id="rot">Rotate your phone sideways for a bigger slide</div><div id="hint">← → navigate · F fullscreen</div>
 <script>
 const card=(t,p,b,s='')=>`<div class="c ${b?'b':''}" style="${s}"><h3>${t}</h3><p>${p}</p></div>`;
 const grid=(cols,items,extra='')=>`<div class="grid" style="grid-template-columns:${cols};${extra}">${items.map((x,i)=>card(x[0],x[1],i%2)).join('')}</div>`;
@@ -63,8 +64,8 @@ const st=document.getElementById('stage');
 st.innerHTML=S.map((s,i)=>`<section class="s ${s.dark?'dark':''}">${s.t?`<h2>${s.t}</h2>`:''}${s.h}${i?`<div class="n">${i+1} / ${S.length}</div>`:''}</section>`).join('');
 const el=[...st.children];let i=+(location.hash.slice(1))-1||0;
 function show(n){i=Math.max(0,Math.min(el.length-1,n));el.forEach((e,k)=>e.classList.toggle('on',k==i));document.getElementById('prev').style.display=i>0?'block':'none';document.getElementById('next').style.display=i<el.length-1?'block':'none';document.getElementById('bar').style.width=((i+1)/el.length*100)+'%';history.replaceState(null,'','#'+(i+1))}
-function fit(){const k=Math.min(innerWidth/1280,innerHeight/720);st.style.transform=`scale(${k}) translate(-50%,-50%)`;st.style.left='50%';st.style.top='50%';st.style.transformOrigin='0 0';st.style.marginLeft=(-640*k+640*k)+'px'}
-addEventListener('resize',fit);fit();show(i);
+function fit(){const v=window.visualViewport,W=document.documentElement.clientWidth||innerWidth,H=Math.min(innerHeight,v?v.height:innerHeight),k=Math.min(W/1280,H/720);st.style.transform=`translate(${(W-1280*k)/2}px,${(H-720*k)/2}px) scale(${k})`;document.getElementById('rot').style.display=(W<H&&W<700)?'block':'none'}
+addEventListener('resize',fit);addEventListener('orientationchange',()=>setTimeout(fit,200));if(window.visualViewport)visualViewport.addEventListener('resize',fit);fit();show(i);
 addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' ','Enter'].includes(e.key))show(i+1);else if(['ArrowLeft','PageUp','Backspace'].includes(e.key))show(i-1);else if(e.key=='Home')show(0);else if(e.key=='End')show(el.length-1);else if(e.key=='f'||e.key=='F')document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()});
 addEventListener('click',e=>e.target.closest('a,.nav')||show(e.clientX>innerWidth/3?i+1:i-1));
 document.getElementById('prev').onclick=()=>show(i-1);document.getElementById('next').onclick=()=>show(i+1);
