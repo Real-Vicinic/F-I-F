@@ -54,14 +54,15 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done
 
 ## 6. SI assistant (Groq) fixes
 Groq retired `llama-3.3-70b-versatile` on 16 Aug 2026, which broke the assistant.
-- [ ] Set `GroqModel` default in `backend/template.yaml` to `openai/gpt-oss-120b` (this overrides the default in `rag.py`) and redeploy via `main`
+- [ ] Set `GROQ_MODEL: openai/gpt-oss-120b` in `.github/workflows/backend.yml` (passed to `sam deploy` as `GroqModel`). Changing only the `Default` in `backend/template.yaml` does **not** update the existing stack
+- [ ] After the deploy, confirm the Lambda's `GROQ_MODEL` environment variable in the AWS console shows the new model
+- [ ] Keep the `GroqModel` default in `backend/template.yaml` and `GROQ_MODEL` in `backend/.env.example` in sync with the workflow
 - [ ] Confirm the `GROQ_API_KEYS` GitHub secret is set, valid and `;`-separated (a deploy with an empty secret turns the assistant off)
-- [ ] Update `GROQ_MODEL` in `backend/.env.example`
-- [ ] `rag.py`: log Groq HTTP/network errors, shorten the per-key timeout to 8 s, raise `max_tokens` to 1000 for the reasoning model, treat empty replies as failures
-- [ ] `/chat`: return `source` (`groq` or `fallback`) and an `error` code so outages are visible
+- [ ] `rag.py`: log Groq HTTP/network errors, 8 s per-key timeout, `max_tokens` 1000 for the reasoning model, empty replies count as failures
+- [ ] `/chat`: return `source` (`groq` or `fallback`) and `error`; fallback text names the reason
 - [ ] Smoke test: run the `/chat` check in CI (`SMOKE_CHAT=1`) and require `source == "groq"`
 - [ ] Verify in the deployed app: ask demo question 1 and check the answer is not the "SI model unavailable" text
-- [ ] Decide how to track future Groq deprecations (check https://console.groq.com/docs/deprecations before each release)
+- [ ] Track future Groq deprecations (check https://console.groq.com/docs/deprecations before each release)
 
 ## 7. Demo prep
 - [ ] Demo script: 1) ranked explorer → 2) Moon Base scenario filter → 3) compare BASS vs BASS-II → 4) chat: "Which tests ran at ≥30% O₂ and why does that matter for the Moon Base?"

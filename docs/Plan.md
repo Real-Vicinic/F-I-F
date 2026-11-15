@@ -78,7 +78,7 @@ flame-in-freefall/
 |---|---|
 | PSI raw data too large/noisy for hackathon | Use curated metadata subset; link out to PSI for raw downloads |
 | LLM hallucination in SI answers | RAG with strict grounding: answer only from retrieved chunks, cite investigation names, "I don't know" fallback |
-| Groq model retired or key invalid (the assistant silently drops to the fallback list) | Pin the model in `template.yaml` (`GroqModel`), watch Groq's deprecation page, keep several keys in `GROQ_API_KEYS`, and make the smoke test fail when `/chat` is not answered by Groq |
+| Groq model retired or key invalid (the assistant silently drops to the fallback list) | Pin the model in `.github/workflows/backend.yml` (`GROQ_MODEL`), watch Groq's deprecation page, keep several keys in `GROQ_API_KEYS`, and make the smoke test fail when `/chat` is not answered by Groq |
 | Cold-start latency on Lambda + Neon | Neon pooled connection in init; keep Lambda memory ≥ 512 MB |
 | CORS / env var mismatch between Pages and API | Single `.env.example` per folder, deploy checklist in README |
 
@@ -112,9 +112,10 @@ The workflows in `.github/workflows/` differ from the plan above:
 ## SI assistant (Groq)
 
 - **Flow:** `POST /chat` → `rag.ask()` → Postgres full-text retrieval (`chunks.tsv`, top 8, or all chunks of one investigation when `investigation_id` is given) → Groq chat completion with a system prompt that allows answers only from the retrieved context and requires `[INVESTIGATION]` citations → response `{answer, citations}`.
-- **Configuration:** `GROQ_API_KEYS` (keys separated by `;`, `,` or whitespace; tried in random order until one returns 200) and `GROQ_MODEL`. In AWS, `GROQ_MODEL` is set from the `GroqModel` parameter in `backend/template.yaml`, which overrides the default in `backend/src/rag.py`; change the model in the template.
+- **Configuration:** `GROQ_API_KEYS` (keys separated by `;`, `,` or whitespace; tried in random order until one returns 200) and `GROQ_MODEL`. In AWS, the Lambda's `GROQ_MODEL` comes from the `GroqModel` parameter of `backend/template.yaml`, which overrides the default in `backend/src/rag.py`. **Change the model in `.github/workflows/backend.yml` (`GROQ_MODEL`)**, which passes it to `sam deploy` as `GroqModel=...` on every deploy. Editing only the `Default` in `template.yaml` does not update an existing stack, because SAM reuses the stack's previous parameter values.
 - **Model history:** the project started on `llama-3.3-70b-versatile`. Groq retired it on 16 Aug 2026 for free and developer-tier accounts (recommended replacements: `openai/gpt-oss-120b`, `qwen/qwen3.6-27b`), after which every request failed and the assistant showed only the fallback list. The current model is `openai/gpt-oss-120b`.
-- **Fallback behaviour:** if every key fails, the answer is "SI model unavailable. Relevant indexed facts:" followed by up to four retrieved chunks, with citations. Errors are not logged in the original `rag.py`, which is why the outage was hard to spot.
+- **Incident note (Nov 2026):** changing the `GroqModel` default in `template.yaml` did not fix the live app, because `sam deploy` kept the stack's previous parameter value (`llama-3.3-70b-versatile`). The chat showed "Groq does not have model llama-3.3-70b-versatile" until the workflow started passing `GroqModel` explicitly.
+- **Fallback behaviour:** if every key fails, the answer is "SI model unavailable (<reason>). Relevant indexed facts:" followed by up to four retrieved chunks, with citations. The reason names the cause (for example "Groq does not have model …", "Groq rejected the API key", "GROQ_API_KEYS is not set on the server"); `/chat` also returns `source` (`groq` or `fallback`) and an `error` code, and the details are logged to CloudWatch. The original `rag.py` logged nothing, which is why the outage was hard to spot.
 - **Reasoning models:** `gpt-oss` models spend part of the token budget on reasoning, so keep `max_tokens` generous (1000 or more) and treat an empty reply as a failure.
 - **Timeouts:** Lambda is limited to 25 s and API Gateway to 29 s. Keep the per-key Groq timeout short (8 s) so a few dead keys cannot exceed the limit.
 
