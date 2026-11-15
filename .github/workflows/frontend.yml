@@ -2,41 +2,51 @@ name: frontend
 
 on:
   push:
-    branches: [develop, main]
+    branches: [main]
     paths: ["frontend/**", ".github/workflows/frontend.yml"]
   workflow_dispatch:
 
-permissions:
-  id-token: write
-  contents: read
+concurrency: frontend
 
-concurrency: frontend-${{ github.ref_name }}
+env:
+  AWS_REGION: eu-west-1
+  STAGE: prod
+  CF_PROJECT: flame-in-freefall
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
     env:
-      STAGE: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - uses: actions/checkout@v4
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ vars.AWS_REGION || 'eu-west-1' }}
       - name: Find API URL
         run: |
           URL=$(aws cloudformation describe-stacks --stack-name "flame-in-freefall-$STAGE" \
             --query "Stacks[0].Outputs[?OutputKey=='ApiUrl'].OutputValue" --output text)
-          [ -n "$URL" ] && [ "$URL" != "None" ] || { echo "::error::Deploy the backend first (stack flame-in-freefall-$STAGE not found)"; exit 1; }
+          [ -n "$URL" ] && [ "$URL" != "None" ] || { echo "::error::Deploy the backend first"; exit 1; }
           echo "VITE_API_URL=$URL" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
-        with: {node-version: 20, cache: npm, cache-dependency-path: frontend/package-lock.json}
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
       - run: npm ci && npm run build
         working-directory: frontend
       - uses: cloudflare/wrangler-action@v3
+        continue-on-error: true
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: frontend
-          command: pages deploy dist --project-name=${{ vars.CF_PAGES_PROJECT }} --branch=${{ github.ref_name }}
+          command: pages project create ${{ env.CF_PROJECT }} --production-branch=main
+      - id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: frontend
+          command: pages deploy dist --project-name=${{ env.CF_PROJECT }} --branch=main
+      - run: |
+          echo "### Frontend: ${{ steps.deploy.outputs.deployment-url }}" >> "$GITHUB_STEP_SUMMARY"

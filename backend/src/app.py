@@ -3,7 +3,7 @@ import db, rag, reference, scoring
 
 CORS = {"Access-Control-Allow-Origin": os.environ.get("ALLOWED_ORIGIN", "*"),
         "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Allow-Methods": "GET,POST,OPTIONS"}
-EXPORT = ["id", "name", "full_name", "family", "tier", "fuel_type", "fuels", "fuel_geometry", "hardware", "facility", "o2_min", "o2_max",
+EXPORT = ["id", "name", "psi_id", "full_name", "family", "tier", "fuel_type", "fuels", "fuel_geometry", "hardware", "facility", "o2_min", "o2_max",
           "o2_note", "pressure_psi", "airflow", "gravity", "variables", "sensors", "tags", "informs", "prevention", "detection",
           "suppression", "score", "source_url"]
 
@@ -49,7 +49,9 @@ def handler(event, _ctx):
         if path in ("/environments", "/scenarios"):
             return resp(200, scoring.ENVIRONMENTS)
         if path == "/meta":
-            return resp(200, {**reference.META, "control_areas": reference.CONTROL_AREAS, "gaps": reference.GAPS})
+            return resp(200, {**reference.META, "control_areas": reference.CONTROL_AREAS, "gaps": reference.GAPS,
+                              "incidents": reference.INCIDENTS, "resources": reference.RESOURCES,
+                              "misconceptions": reference.MISCONCEPTIONS, "fire_triangle_note": reference.FIRE_TRIANGLE_NOTE})
         if path == "/earth":
             rows = {r["id"]: r for r in db.investigations()}
             items = [{**x, "related": [{"id": i, "name": rows[i]["name"]} for i in x["related"] if i in rows]} for x in reference.EARTH]

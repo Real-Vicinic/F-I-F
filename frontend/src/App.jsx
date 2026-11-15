@@ -34,7 +34,6 @@ export default function App() {
     get("/conditions").then((d) => setConds(d.items || [])).catch(() => {});
   }, []);
 
-  const gaps = useMemo(() => analyze(items, conds), [items, conds]);
   const [, a, b] = h.match(/^\/compare\/([\w-]+)\/([\w-]+)$/) || [];
   const dm = h.match(/^\/i\/([\w-]+)$/);
   const explorer = h !== "/insights" && !a && !dm;
@@ -45,9 +44,7 @@ export default function App() {
       <header className="bar">
         <a className="brand" href="#/">Flame in <b>Freefall</b></a>
         <span className={`pill ${api[0]}`}>{api[1]}</span>
-        {items && <><span className="pill">{items.length} experiments</span><span className="pill">{items.filter((i) => i.tier === "direct").length} direct</span>
-          <span className={`pill${gaps.updated ? " ok" : ""}`} title="Experiments whose oxygen, pressure or airflow gaps were filled from NASA sources">{gaps.updated} gaps updated</span>
-          <span className="pill" title="Experiments still missing oxygen, pressure or airflow">{gaps.withOpen} with open gaps</span></>}
+        {items && <><span className="pill">{items.length} experiments</span><span className="pill">{items.filter((i) => i.tier === "direct").length} direct</span></>}
         {explorer && <button className="rerank" title="Reset the sliders to the default weights" onClick={() => setW(DEFAULT_W)}>Re-rank</button>}
       </header>
       <nav className="tabs">

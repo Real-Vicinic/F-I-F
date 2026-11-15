@@ -3,11 +3,6 @@ name: database
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        description: Target environment (Neon branch)
-        type: choice
-        options: [dev, prod]
-        default: dev
       seed:
         description: Run seed.py after migrations
         type: boolean
@@ -16,7 +11,6 @@ on:
 jobs:
   db:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
     env:
       DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
     defaults:

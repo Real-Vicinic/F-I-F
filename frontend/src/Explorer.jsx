@@ -1,10 +1,8 @@
 import { useMemo, useState } from "react";
-import { analyze } from "./gaps.js";
 import { FACTORS, DEFAULT_W, factors, blend, COVER } from "./rank.js";
 import { Fits, Tags, State } from "./ui.jsx";
 import FlameStage from "./FlameStage.jsx";
 import Reference from "./Reference.jsx";
-import Gaps from "./Gaps.jsx";
 
 export function Panel({ title, right, open: initial = true, children, className = "" }) {
   const [open, setOpen] = useState(initial);
@@ -40,7 +38,7 @@ function Weights({ w, setW }) {
   );
 }
 
-function Detail({ x, w, picked, toggle, gap }) {
+function Detail({ x, w, picked, toggle }) {
   if (!x) return <Panel title="Experiment detail"><p className="dim">Select an experiment.</p></Panel>;
   return (
     <Panel title="Experiment detail">
@@ -55,18 +53,6 @@ function Detail({ x, w, picked, toggle, gap }) {
           <em>{x.fx[f.key].toFixed(2)} × {w[f.key].toFixed(2)}</em>
         </div>
       ))}
-      {gap?.rows.length > 0 && (
-        <>
-          <h4>Data updates</h4>
-          {gap.rows.map((c, n) => (
-            <p className="upd" key={n}>
-              <b>{[c.o2_pct != null && `O₂ ${c.o2_pct}%`, c.pressure_psi != null && `${c.pressure_psi} psi`, c.airflow_cm_s != null && `${c.airflow_cm_s} cm/s`].filter(Boolean).join(" · ") || "no values"}</b>
-              {c.note && <span className="dim"> — {c.note}</span>}
-            </p>
-          ))}
-        </>
-      )}
-      {gap?.open.length > 0 && <p className="dim note">Still unknown: {gap.open.map((k) => ({ o2: "oxygen", pressure: "pressure", airflow: "airflow" }[k])).join(", ")}.</p>}
       <div className="dact">
         <a className="btn" href={`#/i/${x.id}`}>Full detail →</a>
         <label className="pick"><input type="checkbox" checked={picked.includes(x.id)} onChange={() => toggle(x.id)} /> Compare</label>
@@ -246,7 +232,6 @@ export default function Explorer({ items, err, scn, conds, w, setW, picked, togg
 
   if (!items) return <State err={err} loading={!err} />;
   const picked1 = rows.find((r) => r.id === sel);
-  const gaps = useMemo(() => analyze(items, conds), [items, conds]);
 
   return (
     <>
@@ -261,12 +246,11 @@ export default function Explorer({ items, err, scn, conds, w, setW, picked, togg
         <div className="col left">
           <Ranked rows={rows} sel={sel} setSel={setSel} picked={picked} toggle={toggle} f={f} set={set} scn={scn} />
           <Coverage rows={rows} sel={sel} setSel={setSel} />
-          <Gaps gaps={gaps} sel={sel} setSel={setSel} />
           <Environment items={items} conds={conds} scn={scn} f={f} set={set} />
         </div>
         <div className="col right">
           <Weights w={w} setW={setW} />
-          <Detail x={picked1} w={w} picked={picked} toggle={toggle} gap={gaps.rows.find((g) => g.id === sel)} />
+          <Detail x={picked1} w={w} picked={picked} toggle={toggle} />
           <Panel title="Fire physics reference"><Reference /></Panel>
         </div>
       </div>
