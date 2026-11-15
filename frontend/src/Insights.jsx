@@ -44,9 +44,17 @@ export default function Insights() {
       <section className="card">
         <h2>Applications on Earth</h2>
         {earth.items.map((x) => (
-          <p key={x.id}><b>{x.title}</b> — {x.origin}. {x.earth_use}.{" "}
+          <p key={x.id}><b>{x.url ? <a href={x.url} target="_blank" rel="noreferrer">{x.title}</a> : x.title}</b> — {x.origin}. {x.earth_use}.{" "}
             {x.related.length > 0 && <span className="tags">{x.related.map(link)}</span>}</p>
         ))}
+      </section>
+
+      <section className="card">
+        <h2>Why it matters: fires in space</h2>
+        {meta.incidents.map((x) => (
+          <p key={x.id}><b>{x.url ? <a href={x.url} target="_blank" rel="noreferrer">{x.title}</a> : x.title}</b> <span className="dim">({x.year})</span> — {x.summary}</p>
+        ))}
+        <p className="dim">Summaries from the challenge resource page. Verify details in NASA sources.</p>
       </section>
 
       <section className="card">
@@ -69,6 +77,18 @@ export default function Insights() {
           <a href={ex("kind=conditions&format=csv")}>Test conditions CSV</a><a href={ex("kind=conditions&format=json")}>Test conditions JSON</a>
         </div>
         <p className="dim">Audience: {meta.audience.join(", ")}.</p>
+      </section>
+
+      <section className="card">
+        <h2>Resources</h2>
+        {[...new Set(meta.resources.map((x) => x.group || "Resources"))].map((g) => (
+          <div key={g}>
+            <h3>{g}</h3>
+            {meta.resources.filter((x) => (x.group || "Resources") === g).map((x) => (
+              <p key={x.url}><a href={x.url} target="_blank" rel="noreferrer">{x.title}</a> <span className="dim">{x.detail}</span></p>
+            ))}
+          </div>
+        ))}
       </section>
     </>
   );
