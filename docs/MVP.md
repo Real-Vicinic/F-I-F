@@ -21,7 +21,8 @@ A working web dashboard that lets a user **find, compare, and understand** micro
    - "How is this relevant to fire safety?" SI-generated explanation
    - Similar investigations ("compare" view for 2 investigations)
 5. **SI assistant (chat panel)**
-   - Answers questions grounded in the indexed PSI data (RAG over curated summaries + raw metadata)
+   - Answers questions grounded in the indexed PSI data (RAG: Postgres full-text retrieval over curated summaries + raw metadata, answer written by an LLM on Groq, currently `openai/gpt-oss-120b`)
+   - If Groq cannot answer (bad key, retired model, timeout) the panel falls back to listing the retrieved facts instead of an AI answer
    - Example: *"Which experiments tested materials at 30%+ oxygen like the planned Moon Base?"*
 6. **Moon/Mars context view**
    - Preset scenario filter: spacesuit (100% O₂, 4.3 psi), Moon Base (~30% O₂, ≤10.2 psi), ISS-like Earth atmosphere — showing which investigations bound each scenario
@@ -42,6 +43,7 @@ A working web dashboard that lets a user **find, compare, and understand** micro
 | Frontend | React (Vite) | Cloudflare Pages |
 | Backend | Python Lambda functions via AWS SAM | API Gateway + Lambda |
 | Database | Neon (serverless Postgres) | managed |
+| SI assistant | Groq chat-completions API (OpenAI-compatible), called from the Lambda with `GROQ_API_KEYS` | Groq cloud |
 | Repo | GitHub, monorepo with `frontend/` and `backend/` as separate top-level folders | GitHub Actions |
 
 ## MVP success criteria
@@ -49,4 +51,5 @@ A working web dashboard that lets a user **find, compare, and understand** micro
 - Dashboard loads ranked investigation list in < 2 s
 - Filters work across all seeded investigations
 - SI assistant answers 3 demo questions correctly, grounded in seeded data, with cited investigation names
+- Those answers come from Groq, not from the offline fallback (the fallback text starts with "SI model unavailable")
 - `sam deploy` + Cloudflare Pages deploy both run from a clean clone using only README instructions

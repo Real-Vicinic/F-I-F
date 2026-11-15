@@ -6,7 +6,7 @@ Parameters:
   Stage: {Type: String, Default: dev, AllowedValues: [dev, prod]}
   DatabaseUrl: {Type: String, NoEcho: true}
   GroqApiKeys: {Type: String, NoEcho: true, Default: ""}
-  GroqModel: {Type: String, Default: llama-3.3-70b-versatile}
+  GroqModel: {Type: String, Default: openai/gpt-oss-120b}
   AllowedOrigin: {Type: String, Default: "*"}
 
 Globals:
