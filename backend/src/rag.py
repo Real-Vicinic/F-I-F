@@ -52,6 +52,21 @@ def _groq(messages):
     return None, err
 
 
+def _reason(err):
+    """Human-readable cause shown in the chat when Groq could not answer."""
+    model = os.environ.get("GROQ_MODEL") or DEFAULT_MODEL
+    return {
+        "no_keys": "GROQ_API_KEYS is not set on the server",
+        "http_401": "Groq rejected the API key",
+        "http_403": "Groq blocked the request (403)",
+        "http_404": f"Groq does not have model {model}",
+        "http_400": f"Groq rejected the request for model {model}",
+        "http_429": "Groq rate limit reached",
+        "request_failed": "could not reach Groq (timeout or network error)",
+        "empty_response": f"model {model} returned an empty answer",
+    }.get(err, f"Groq error {err}")
+
+
 def ask(question, inv_id=None):
     question = question.strip()[:500]
     ctx = db.inv_chunks(inv_id) if inv_id else retrieve(question)
@@ -62,6 +77,7 @@ def ask(question, inv_id=None):
     answer, err = _groq([{"role": "system", "content": SYSTEM},
                          {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {question}"}])
     if answer is None:
-        answer = "SI model unavailable. Relevant indexed facts:\n" + "\n".join(f"- {c['text']}" for c in ctx[:4])
+        facts = "\n".join(f"- {c['text']}" for c in ctx[:4])
+        answer = f"SI model unavailable ({_reason(err)}). Relevant indexed facts:\n" + facts
         return {"answer": answer, "citations": cites, "source": "fallback", "error": err}
     return {"answer": answer, "citations": cites, "source": "groq"}
