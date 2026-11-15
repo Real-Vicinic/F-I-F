@@ -8,9 +8,9 @@
     "hardware": "Microgravity Science Glovebox (MSG) + SPICE fan-driven flow duct",
     "facility": "ISS",
     "fuel_type": "solid",
-    "fuels": "Solid fabric and plastic samples",
-    "fuel_geometry": "Flat and cylindrical samples (sizes to verify in PSI)",
-    "objective": "Measures how flammability of solid materials depends on oxygen concentration and air flow in microgravity, and how those flames are suppressed. Foundation for spacecraft material selection.",
+    "fuels": "Flat samples, PMMA (acrylic) spheres, porous wax slabs, wax candles, cotton-fiberglass fabric",
+    "fuel_geometry": "2-cm acrylic spheres and 2-cm wide fabric strips in opposed flow; flat samples; wax slabs and candles",
+    "objective": "Burns a wide variety of solid samples in the Microgravity Science Glovebox with airflow speed as the main variable, then applies nitrogen suppressant. Early results: NASA-STD-6001 Test 1 is not conservative (materials can burn at lower oxygen in microgravity), and local suppressant can fail or even strengthen a flame by entraining air.",
     "tier": "direct",
     "informs": [
       "material_selection",
@@ -18,11 +18,11 @@
       "suppression_systems",
       "fire_modeling"
     ],
-    "o2_min": null,
-    "o2_max": null,
-    "o2_note": "Oxygen varied; exact range to be verified in PSI",
-    "pressure_psi": null,
-    "airflow": "Fan-driven flow, speed varied",
+    "o2_min": 17,
+    "o2_max": 21,
+    "o2_note": "21% O2 (ISS air) down to 17% using nitrogen, at 1 atm (ISS Combustion Science Researcher's Guide, 2015)",
+    "pressure_psi": 14.7,
+    "airflow": "0-30 cm/s (spacecraft ventilation range); example tests from 12 cm/s down to below 1 cm/s (ISS Combustion Science Researcher's Guide, 2015)",
     "gravity": "microgravity",
     "tags": [
       "solid",
@@ -36,7 +36,8 @@
     "variables": [
       "Oxygen concentration",
       "Airflow speed",
-      "Sample material and geometry"
+      "Sample material and geometry",
+      "Nitrogen suppressant application"
     ],
     "sensors": [
       "Flame imaging (video)",
@@ -56,7 +57,7 @@
     "hardware": "Microgravity Science Glovebox (MSG) + SPICE fan-driven flow duct",
     "facility": "ISS",
     "fuel_type": "solid",
-    "fuels": "Solid fabric and plastic samples",
+    "fuels": "Solid samples including fabric (sizes and oxygen range to verify in PSI)",
     "fuel_geometry": "Solid samples (sizes to verify in PSI)",
     "objective": "Follow-on to BASS extending solid-material flammability and suppression tests in the same flow duct.",
     "tier": "direct",
@@ -244,7 +245,7 @@
     "fuel_type": "aerosol",
     "fuels": "Smoke particles from heated spacecraft-like materials",
     "fuel_geometry": null,
-    "objective": "Measures smoke particle size and concentration in microgravity to support the design of spacecraft smoke detectors.",
+    "objective": "Measured the particle-size distribution of smoke from spacecraft materials, giving guidance for the design of future spacecraft smoke detectors.",
     "tier": "direct",
     "informs": [
       "smoke_detection"
@@ -284,7 +285,7 @@
     "hardware": "Smoke and aerosol measurement instrument",
     "facility": "ISS",
     "fuel_type": "aerosol",
-    "fuels": "Smoke particles from heated spacecraft-like materials",
+    "fuels": "Smoke from heated spacecraft-like materials, including Pyrell (intumescent fire-retardant)",
     "fuel_geometry": null,
     "objective": "Reflight of SAME extending smoke measurements in microgravity for detector design.",
     "tier": "direct",
@@ -328,7 +329,7 @@
     "fuel_type": "aerosol",
     "fuels": "Dust (non-combustion)",
     "fuel_geometry": null,
-    "objective": "Uses the SAME smoke instrument to detect dust, informing how detectors can tell dust from smoke and avoid nuisance alarms.",
+    "objective": "Measured background aerosol particulate levels on the ISS with the SAME instrument, informing how detectors can tell dust from smoke and avoid nuisance alarms.",
     "tier": "related",
     "informs": [
       "smoke_detection"
@@ -369,7 +370,7 @@
     "fuel_type": "aerosol",
     "fuels": "Dust (non-combustion)",
     "fuel_geometry": null,
-    "objective": "Follow-on dust measurement tests with the SAME instrument.",
+    "objective": "Measured background aerosol particulate levels on the ISS with the SAME instrument, informing how detectors can tell dust from smoke and avoid nuisance alarms.",
     "tier": "related",
     "informs": [
       "smoke_detection"
@@ -408,18 +409,18 @@
     "hardware": "Multi-user Droplet Combustion Apparatus (MDCA) in Combustion Integrated Rack (CIR)",
     "facility": "ISS",
     "fuel_type": "liquid",
-    "fuels": "Burning liquid fuel droplets",
-    "fuel_geometry": "Single suspended droplet (size to verify in PSI)",
-    "objective": "Tests fire suppression by diluting the chamber atmosphere with carbon dioxide and helium, both of which suppress fire.",
+    "fuels": "Heptane and methanol droplets",
+    "fuel_geometry": "Droplet 1-5 mm (MDCA range), fiber-supported or free floating",
+    "objective": "Studies heptane and methanol droplets in O2/N2 mixtures with a second inert gas (N2, CO2, He, Xe) to see how suppressants shift the flammability limit. Key result: the limit is lower in reduced gravity, so terrestrial inert-gas suppressant standards give less margin of safety in space. Also uncovered stable cool flames that persist after the visible flame goes out.",
     "tier": "direct",
     "informs": [
       "suppression_systems"
     ],
     "o2_min": null,
     "o2_max": null,
-    "o2_note": null,
+    "o2_note": "O2/N2 mixtures with an added inert diluent (N2, CO2, He or Xe). MDCA supports 0-3 atm and up to 40% O2. Example test: heptane in 21% O2, 70% CO2, balance N2 (ISS Combustion Science Researcher's Guide, 2015)",
     "pressure_psi": null,
-    "airflow": null,
+    "airflow": "Droplet translated at 3 cm/s in the 70% CO2 example test",
     "gravity": "microgravity",
     "tags": [
       "liquid",
@@ -430,8 +431,8 @@
     "detection": 0,
     "suppression": 3,
     "variables": [
-      "Diluent gas (CO2, He)",
-      "Atmosphere composition",
+      "Diluent gas (N2, CO2, He, Xe)",
+      "Oxygen concentration",
       "Droplet size"
     ],
     "sensors": [
@@ -452,16 +453,16 @@
     "hardware": "Multi-user Droplet Combustion Apparatus (MDCA) in Combustion Integrated Rack (CIR)",
     "facility": "ISS",
     "fuel_type": "liquid",
-    "fuels": "Burning liquid fuel droplets",
-    "fuel_geometry": "Single suspended droplet (size to verify in PSI)",
-    "objective": "Follow-on suppression experiments with droplet flames in diluted atmospheres.",
+    "fuels": "Pure-fuel mixtures and real-fuel surrogates, e.g. ethanol and methyl butanoate droplets",
+    "fuel_geometry": "Droplets, including droplet-droplet interaction and slow sub-buoyant flow studies",
+    "objective": "Follow-on to FLEX: extends tests to fuels and conditions that mimic real combustors, including fuel mixtures, real-fuel surrogates, soot formation, slow sub-buoyant flow and droplet-droplet interactions.",
     "tier": "direct",
     "informs": [
       "suppression_systems"
     ],
     "o2_min": 10,
     "o2_max": 40,
-    "o2_note": "10-40% O2 (0.1-0.4 mole fraction), 0.5-3.0 atm, diluent gas balance (PSI summary)",
+    "o2_note": "10-40% O2 (0.1-0.4 mole fraction), 0.5-3.0 atm, diluent gas balance (PSI summary). Example: ethanol at 30% O2, 2.4 atm (ISS Combustion Science Researcher's Guide, 2015)",
     "pressure_psi": null,
     "airflow": null,
     "gravity": "microgravity",
@@ -496,7 +497,7 @@
     "hardware": "Multi-user Droplet Combustion Apparatus (MDCA) in Combustion Integrated Rack (CIR)",
     "facility": "ISS",
     "fuel_type": "liquid",
-    "fuels": "Burning liquid fuel droplets",
+    "fuels": "n-dodecane and n-dodecane/iso-dodecane mixtures",
     "fuel_geometry": "Single suspended droplet (size to verify in PSI)",
     "objective": "Studies low-temperature cool flames of droplets. Relevant to fire safety but less directly than solid-material flammability.",
     "tier": "indirect",
@@ -505,7 +506,7 @@
     ],
     "o2_min": null,
     "o2_max": null,
-    "o2_note": null,
+    "o2_note": "Oxygen not given in the PSI summary; pressure 0.25-5 atm (PSI summary)",
     "pressure_psi": null,
     "airflow": null,
     "gravity": "microgravity",
@@ -539,7 +540,7 @@
     "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
     "facility": "ISS",
     "fuel_type": "gas",
-    "fuels": "Flammable gas (e.g. propane) in nitrogen; oxygen-nitrogen oxidizer",
+    "fuels": "Propane, n-butane and n-pentane; normal and inverse flames",
     "fuel_geometry": "Spherical burner; oxidizer flows out of the burner into the fuel-filled chamber (inside-out flame)",
     "objective": "Highest-oxygen microgravity tests in PSI, with oxidizer up to 85% oxygen. Directly bounds the oxygen-enriched atmospheres expected in a Moon Base and pressurized rovers.",
     "tier": "related",
@@ -588,9 +589,9 @@
     "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
     "facility": "ISS",
     "fuel_type": "gas",
-    "fuels": "Gaseous fuel emulating solid-material burning",
-    "fuel_geometry": null,
-    "objective": "Studies materials flammability in still atmospheres as a function of material properties, using gaseous fuels.",
+    "fuels": "A small number of gaseous fuels chosen to emulate paper, plastic and alcohol burning",
+    "fuel_geometry": "Flat porous burner; fuel flow set from measured heat flux and surface temperature to mimic condensed-fuel vaporization (ISS Combustion Science Researcher's Guide, 2015)",
+    "objective": "Fire prevention focus: improves understanding of materials flammability (ignition and extinction) and checks whether existing flammability test methods remain valid in low and partial gravity.",
     "tier": "related",
     "informs": [
       "material_selection",
@@ -631,7 +632,7 @@
     "facility": "ISS",
     "fuel_type": "gas",
     "fuels": "Gaseous fuels",
-    "fuel_geometry": null,
+    "fuel_geometry": "Coflow or simple gas-jet flame with a mesh electrode above the burner (up to 10 kV) (ISS Combustion Science Researcher's Guide, 2015)",
     "objective": "Uses electric fields on flame ions to mimic partial gravity. Closest analogue to Moon/Mars gravity in PSI; no true partial-gravity data exists yet.",
     "tier": "related",
     "informs": [
@@ -651,10 +652,13 @@
     "detection": 0,
     "suppression": 0,
     "variables": [
-      "Electric field strength"
+      "Electric field strength (up to 10 kV)",
+      "Fuel dilution"
     ],
     "sensors": [
-      "Flame imaging (video)"
+      "Flame imaging (video)",
+      "Ion current through the flame",
+      "Flame response time to electric forcing"
     ],
     "earth_application": null,
     "source_url": "https://psi.nasa.gov/",
@@ -670,9 +674,9 @@
     "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
     "facility": "ISS",
     "fuel_type": "gas",
-    "fuels": "Gaseous fuels",
-    "fuel_geometry": null,
-    "objective": "Fundamental gaseous-flame experiment in the ACME project; indirect relevance to fire safety (details to verify in PSI).",
+    "fuels": "Diluted methane and ethylene in an air coflow",
+    "fuel_geometry": "Lifted coflow gas-jet flames (avoids heat loss to the burner) (ISS Combustion Science Researcher's Guide, 2015)",
+    "objective": "Extends the flame conditions models can predict, at the extremes of fuel dilution: sooty pure-fuel flames and dilute flames near extinction. Builds on SLICE.",
     "tier": "indirect",
     "informs": [
       "fire_modeling"
@@ -711,9 +715,9 @@
     "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
     "facility": "ISS",
     "fuel_type": "gas",
-    "fuels": "Gaseous fuels",
-    "fuel_geometry": "Spherical burner",
-    "objective": "Fundamental gaseous-flame experiment in the ACME project; indirect relevance to fire safety (details to verify in PSI).",
+    "fuels": "Hydrogen and methane (soot-free flames); ethylene (sooty flames); inert diluents in fuel and chamber",
+    "fuel_geometry": "Spherical flame on a porous burner; fuel/inert mixture issues into the CIR chamber (ISS Combustion Science Researcher's Guide, 2015)",
+    "objective": "Advances prediction of the structure, dynamics and extinction of soot-free and sooty flames: radiative and convective extinction limits, and pulsating instabilities.",
     "tier": "indirect",
     "informs": [
       "fire_modeling"
@@ -732,8 +736,8 @@
     "detection": 0,
     "suppression": 0,
     "variables": [
-      "Fuel",
-      "Flow conditions"
+      "Fuel and diluent mixture",
+      "Chamber atmosphere diluents"
     ],
     "sensors": [
       "Flame imaging (video)"
@@ -752,16 +756,16 @@
     "hardware": "ACME modular hardware in Combustion Integrated Rack (CIR)",
     "facility": "ISS",
     "fuel_type": "gas",
-    "fuels": "Gaseous fuels",
-    "fuel_geometry": null,
-    "objective": "Fundamental gaseous-flame experiment in the ACME project; indirect relevance to fire safety (details to verify in PSI).",
+    "fuels": "Ethylene or methane in an oxygen-enriched atmosphere",
+    "fuel_geometry": "Spherical flame on a porous burner; inverse flame if approved, otherwise a coflow burner (ISS Combustion Science Researcher's Guide, 2015)",
+    "objective": "Improves understanding of soot inception and control to enable oxygen-enriched combustion and burner designs that are robust and soot free. Tests soot-inception and extinction limits of spherical flames.",
     "tier": "indirect",
     "informs": [
       "fire_modeling"
     ],
     "o2_min": null,
     "o2_max": null,
-    "o2_note": null,
+    "o2_note": "Oxygen-enriched atmosphere; exact range not stated in the guide, verify in PSI",
     "pressure_psi": null,
     "airflow": null,
     "gravity": "microgravity",
@@ -773,8 +777,9 @@
     "detection": 0,
     "suppression": 0,
     "variables": [
-      "Fuel",
-      "Flow conditions"
+      "Fuel concentration",
+      "Oxygen enrichment",
+      "Flow direction (normal or inverse)"
     ],
     "sensors": [
       "Flame imaging (video)"
@@ -794,8 +799,8 @@
     "facility": "ISS",
     "fuel_type": "gas",
     "fuels": "Gaseous fuel (co-flow burner)",
-    "fuel_geometry": "Co-flow burner",
-    "objective": "Determines smoke point and soot production of gaseous flames in microgravity, relevant to smoke generation and detection.",
+    "fuel_geometry": "Laminar gas-jet diffusion flame in a fan-driven coflow duct",
+    "objective": "Studies the transition from non-smoking to smoking flames (smoke point), an indicator of a fuel's tendency to produce soot, with the goal of simple predictions of soot emissions.",
     "tier": "indirect",
     "informs": [
       "smoke_detection",
@@ -803,7 +808,7 @@
     ],
     "o2_min": null,
     "o2_max": null,
-    "o2_note": null,
+    "o2_note": "Run in the Microgravity Science Glovebox, which is normally limited to ISS air (about 21% O2, 1 atm); verify in PSI (ISS Combustion Science Researcher's Guide, 2015)",
     "pressure_psi": null,
     "airflow": null,
     "gravity": "microgravity",
@@ -839,14 +844,14 @@
     "fuel_type": "gas",
     "fuels": "Gaseous fuel jet flames",
     "fuel_geometry": "Jet burner",
-    "objective": "Studies flame structure and liftoff of gaseous flames; fundamental, indirect relevance to fire safety.",
+    "objective": "Studies the structure and stability of lifted and lifting flames, to advance combustion models that improve fuel efficiency and cut pollutants. Precursor to CLD Flame.",
     "tier": "indirect",
     "informs": [
       "fire_modeling"
     ],
     "o2_min": null,
     "o2_max": null,
-    "o2_note": null,
+    "o2_note": "Uses SPICE hardware in the Microgravity Science Glovebox (normally ISS air, about 21% O2, 1 atm); verify in PSI (ISS Combustion Science Researcher's Guide, 2015)",
     "pressure_psi": null,
     "airflow": null,
     "gravity": "microgravity",
