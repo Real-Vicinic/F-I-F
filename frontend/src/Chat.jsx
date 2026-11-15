@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { post } from "./api.js";
+import FlameStage from "./FlameStage.jsx";
 
 const DEMO = [
   "Which experiments tested materials at 30%+ oxygen like the planned Moon Base?",
@@ -31,6 +32,7 @@ export default function Chat() {
   return (
     <aside className="drawer">
       <div className="dhead"><b>SI assistant</b><button onClick={() => setOpen(false)}>✕</button></div>
+      <FlameStage busy={busy} compact={msgs.length > 0} />
       <div className="msgs">
         {!msgs.length && DEMO.map((d) => <button key={d} className="demo" onClick={() => send(d)}>{d}</button>)}
         {msgs.map((m, i) => (
