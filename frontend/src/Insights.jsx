@@ -50,6 +50,14 @@ export default function Insights() {
       </section>
 
       <section className="card">
+        <h2>Why it matters: fires in space</h2>
+        {meta.incidents.map((x) => (
+          <p key={x.id}><b>{x.title}</b> <span className="dim">({x.year})</span> — {x.summary}</p>
+        ))}
+        <p className="dim">Summaries from the challenge resource page. Verify details in NASA sources.</p>
+      </section>
+
+      <section className="card">
         <h2>Hardware families</h2>
         {Object.entries(hw).map(([k, g]) => (
           <p key={k}><b>{k}</b> <span className="dim">{g.hardware}</span><span className="tags">{g.investigations.map(link)}</span></p>
@@ -69,6 +77,13 @@ export default function Insights() {
           <a href={ex("kind=conditions&format=csv")}>Test conditions CSV</a><a href={ex("kind=conditions&format=json")}>Test conditions JSON</a>
         </div>
         <p className="dim">Audience: {meta.audience.join(", ")}.</p>
+      </section>
+
+      <section className="card">
+        <h2>Resources</h2>
+        {meta.resources.map((x) => (
+          <p key={x.url}><a href={x.url} target="_blank" rel="noreferrer">{x.title}</a> <span className="dim">{x.detail}</span></p>
+        ))}
       </section>
     </>
   );

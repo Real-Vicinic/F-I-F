@@ -7,7 +7,7 @@ import reference, scoring
 
 COLS = ["name", "full_name", "family", "hardware_family", "hardware", "facility", "fuel_type", "fuels", "fuel_geometry", "objective",
         "tier", "informs", "o2_min", "o2_max", "o2_note", "pressure_psi", "airflow", "gravity", "tags", "prevention", "detection",
-        "suppression", "earth_application", "source_url", "safety_relevance_score"]
+        "suppression", "earth_application", "source_url", "safety_relevance_score", "psi_id"]
 UPSERT = (f"INSERT INTO investigations (id,{','.join(COLS)}) VALUES (%s,{','.join(['%s'] * len(COLS))}) "
           f"ON CONFLICT (id) DO UPDATE SET {','.join(f'{c}=EXCLUDED.{c}' for c in COLS)}")
 
@@ -15,7 +15,7 @@ UPSERT = (f"INSERT INTO investigations (id,{','.join(COLS)}) VALUES (%s,{','.joi
 def inv_chunks(r):
     n = r["name"]
     return [
-        ("objective", f"{n} ({r['full_name']}): {r['objective']}"),
+        ("objective", f"{n} ({r['full_name']}{', ' + r['psi_id'] if r.get('psi_id') else ''}): {r['objective']}"),
         ("conditions", f"{n} test conditions: fuel type {r['fuel_type']}; fuels: {r['fuels']}; sample or burner geometry: {r['fuel_geometry'] or 'not specified'}; "
                        f"hardware: {r['hardware']} on {r['facility']}; O2 (oxygen) concentration: {r['o2_note'] or 'not specified'}; "
                        f"airflow: {r['airflow'] or 'not specified'}; gravity: {r['gravity']}."),

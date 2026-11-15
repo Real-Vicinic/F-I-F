@@ -7,8 +7,10 @@ ids = lambda out: [r["id"] for r in out]
 
 def test_all_psi_investigations_present():
     need = {"bass", "bass-ii", "saffire-i", "saffire-ii", "saffire-iii", "same", "same-r", "daft", "daft-2", "flex", "flex-2",
-            "cfi", "cfi-g", "bre", "e-field", "cld-flame", "s-flame", "flame-design", "spice", "slice"}
+            "cfi", "cfi-g", "bre", "e-field", "cld-flame", "s-flame", "flame-design", "spice", "slice",
+            "cool-flame-cfd", "fgm-flame-spread", "spice-analysis", "cool-flame-extinction", "smoke-growth-sim"}
     assert need == set(ids(ROWS))
+    assert all(r.get("psi_id", "").startswith("PSI-") for r in ROWS)
 
 
 def test_default_rank_prefers_solid_flammability():
@@ -23,7 +25,7 @@ def test_focus_reorders():
 
 def test_filters():
     assert {r["fuel_type"] for r in scoring.filter_rank(ROWS, {"fuel": "gas"})} == {"gas"}
-    assert ids(scoring.filter_rank(ROWS, {"o2_min": "30"})) == ["cfi-g"]
+    assert ids(scoring.filter_rank(ROWS, {"o2_min": "30"})) == ["cfi-g", "flex-2"]
     assert "flex" in ids(scoring.filter_rank(ROWS, {"q": "diluent"}))
     assert {r["tier"] for r in scoring.filter_rank(ROWS, {"tier": "direct"})} == {"direct"}
 
@@ -36,8 +38,8 @@ def test_environments_and_partial_pressure():
 
 def test_moon_base_scenario_reranks_and_filters():
     out = scoring.filter_rank(ROWS, {"scenario": "moon_base"})
-    assert {"cfi-g", "bass"} <= set(ids(out)) and "same" not in ids(out)
-    assert [r["id"] for r in out if r["fits"]["moon_base"] == "confirmed"] == ["cfi-g"]
+    assert {"cfi-g", "bass-ii"} <= set(ids(out)) and not {"same", "bass"} & set(ids(out))
+    assert [r["id"] for r in out if r["fits"]["moon_base"] == "confirmed"] == ["cfi-g", "flex-2"]
     base = next(r for r in scoring.filter_rank(ROWS, {}) if r["id"] == "cfi-g")["score"]
     assert next(r for r in out if r["id"] == "cfi-g")["score"] > base
 

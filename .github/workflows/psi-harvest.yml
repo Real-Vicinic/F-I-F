@@ -1,0 +1,125 @@
+name: psi-harvest
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Max investigations to open (0 = all)"
+        default: "30"
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install playwright requests && playwright install --with-deps chromium
+      - name: Harvest PSI combustion investigations
+        env:
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          cat > harvest.py <<'PY'
+          import asyncio, json, os, pathlib, re
+          from urllib.parse import urljoin, urlparse
+          from playwright.async_api import async_playwright
+
+          BASE = "https://psi.nasa.gov"
+          SEARCH = BASE + "/physci/repo/search?q=combustion&data_source=psi&data_type=investigation"
+          LIMIT = int(os.environ.get("LIMIT") or 30)
+          OUT = pathlib.Path("out")
+          for d in ("pages", "files", "api"):
+              (OUT / d).mkdir(parents=True, exist_ok=True)
+          FILE_RE = re.compile(r"\.(csv|xlsx?|zip|txt|json|pdf|mat|h5|hdf5?|nc|tar|gz|tiff?|mp4|avi|dat|docx?)(\?|$)", re.I)
+          net, errors = [], []
+          slug = lambda s: re.sub(r"[^A-Za-z0-9._-]+", "_", s).strip("_")[:90] or "page"
+
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch()
+                  ctx = await browser.new_context(accept_downloads=True)
+                  page = await ctx.new_page()
+
+                  async def on_response(r):
+                      try:
+                          ct = r.headers.get("content-type", "")
+                          net.append({"url": r.url, "status": r.status, "type": ct, "method": r.request.method})
+                          if "json" in ct and urlparse(r.url).netloc.endswith("nasa.gov"):
+                              (OUT / "api" / f"{len(net):05d}_{slug(urlparse(r.url).path)}.json").write_bytes(await r.body())
+                      except Exception as e:
+                          errors.append(f"response {r.url}: {e}")
+
+                  page.on("response", on_response)
+                  await page.goto(SEARCH, wait_until="networkidle", timeout=90000)
+                  links = {}
+                  for _ in range(40):
+                      hrefs = await page.eval_on_selector_all(
+                          "a[href]", "els => els.map(e => [e.href, (e.innerText||'').trim()])")
+                      for h, t in hrefs:
+                          if "/physci/repo/" in h and "/search" not in h and t:
+                              links[h] = t
+                      nxt = page.get_by_role("button", name=re.compile("next", re.I))
+                      if await nxt.count() == 0 or not await nxt.first.is_enabled():
+                          break
+                      await nxt.first.click()
+                      await page.wait_for_load_state("networkidle")
+                  (OUT / "investigation_links.json").write_text(json.dumps(links, indent=2))
+                  (OUT / "search_page.html").write_text(await page.content())
+                  print("investigation links:", len(links))
+
+                  todo = list(links.items())[: LIMIT or None]
+                  for url, title in todo:
+                      s = slug(url.split("/physci/repo/")[-1] or title)
+                      try:
+                          await page.goto(url, wait_until="networkidle", timeout=90000)
+                          (OUT / "pages" / f"{s}.html").write_text(await page.content())
+                          (OUT / "pages" / f"{s}.txt").write_text(await page.inner_text("body"))
+                          anchors = await page.eval_on_selector_all(
+                              "a[href]", "els => els.map(e => [e.href, (e.innerText||'').trim()])")
+                          files = {h: t for h, t in anchors
+                                   if FILE_RE.search(h) or re.search(r"download|data|table|csv|export", t, re.I)}
+                          (OUT / "pages" / f"{s}.links.json").write_text(json.dumps(files, indent=2))
+                          dest = OUT / "files" / s
+                          dest.mkdir(exist_ok=True)
+                          for h, t in files.items():
+                              if not FILE_RE.search(h):
+                                  continue
+                              try:
+                                  r = await ctx.request.get(h, timeout=120000)
+                                  if r.ok:
+                                      (dest / slug(urlparse(h).path.split("/")[-1])).write_bytes(await r.body())
+                              except Exception as e:
+                                  errors.append(f"download {h}: {e}")
+                          btns = page.get_by_role("button", name=re.compile("download|export", re.I))
+                          for i in range(await btns.count()):
+                              try:
+                                  async with page.expect_download(timeout=20000) as dl:
+                                      await btns.nth(i).click()
+                                  d = await dl.value
+                                  await d.save_as(dest / slug(d.suggested_filename))
+                              except Exception as e:
+                                  errors.append(f"button {s}#{i}: {e}")
+                      except Exception as e:
+                          errors.append(f"page {url}: {e}")
+                  await browser.close()
+
+              (OUT / "network.json").write_text(json.dumps(net, indent=2))
+              (OUT / "errors.log").write_text("\n".join(errors))
+              api = sorted({(n["method"], urlparse(n["url"]).netloc + urlparse(n["url"]).path) for n in net
+                            if "json" in n["type"] or "/api" in n["url"]})
+              (OUT / "SUMMARY.md").write_text(
+                  f"investigation links: {len(links)}\npages opened: {len(todo)}\nerrors: {len(errors)}\n\nJSON/API endpoints seen:\n"
+                  + "\n".join(f"- {m} {u}" for m, u in api))
+
+
+          asyncio.run(main())
+          PY
+          python harvest.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: psi-combustion
+          path: out/
+          retention-days: 14

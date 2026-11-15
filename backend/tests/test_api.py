@@ -19,6 +19,12 @@ def test_routes(monkeypatch):
     assert call(monkeypatch, "GET", "/investigations", {"o2_min": "abc"})[0] == 400
 
 
+def test_meta_incidents_resources(monkeypatch):
+    s, _, b = call(monkeypatch, "GET", "/meta")
+    d = json.loads(b)
+    assert s == 200 and len(d["incidents"]) == 3 and all(r["url"].startswith("https://") for r in d["resources"])
+
+
 def test_compare(monkeypatch):
     s, _, b = call(monkeypatch, "GET", "/compare", {"ids": "bass,flex"})
     assert s == 200 and json.loads(b)["different_fields"]
@@ -28,9 +34,9 @@ def test_compare(monkeypatch):
 
 def test_export(monkeypatch):
     s, ct, b = call(monkeypatch, "GET", "/export", {"format": "csv", "fuel": "solid"})
-    assert s == 200 and ct == "text/csv" and b.splitlines()[0].startswith("id,name") and len(b.splitlines()) == 6
+    assert s == 200 and ct == "text/csv" and b.splitlines()[0].startswith("id,name") and len(b.splitlines()) == 7
     s, _, b = call(monkeypatch, "GET", "/export", {"format": "json"})
-    assert len(json.loads(b)) == 20
+    assert len(json.loads(b)) == 25
     assert call(monkeypatch, "GET", "/export", {"kind": "conditions"})[0] == 200
     assert call(monkeypatch, "GET", "/export", {"format": "xml"})[0] == 400
 

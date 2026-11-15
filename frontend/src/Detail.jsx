@@ -20,7 +20,7 @@ export default function Detail({ id }) {
   };
 
   if (!d) return <State err={err} loading />;
-  const rows = [["Fuel type", d.fuel_type], ["Relevance tier", d.tier], ["Fuels", d.fuels], ["Sample / burner geometry", d.fuel_geometry || "not specified"], ["Hardware", d.hardware], ["Facility", d.facility],
+  const rows = [["PSI ID", d.psi_id || "not specified"], ["Fuel type", d.fuel_type], ["Relevance tier", d.tier], ["Fuels", d.fuels], ["Sample / burner geometry", d.fuel_geometry || "not specified"], ["Hardware", d.hardware], ["Facility", d.facility],
     ["Oxygen", d.o2_note || "not specified"], ["Airflow", d.airflow || "not specified"], ["Gravity", d.gravity],
     ["Same across tests", `${d.same.hardware}; ${d.same.facility}; ${d.same.gravity}`], ["Varied across tests", d.varied?.join(", ")], ["Informs", d.informs?.join(", ")], ["Sensors", d.sensors?.join(", ")]];
   return (
