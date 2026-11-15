@@ -49,7 +49,8 @@ def handler(event, _ctx):
         if path in ("/environments", "/scenarios"):
             return resp(200, scoring.ENVIRONMENTS)
         if path == "/meta":
-            return resp(200, {**reference.META, "control_areas": reference.CONTROL_AREAS, "gaps": reference.GAPS})
+            return resp(200, {**reference.META, "control_areas": reference.CONTROL_AREAS, "gaps": reference.GAPS,
+                              "incidents": reference.INCIDENTS, "resources": reference.RESOURCES})
         if path == "/earth":
             rows = {r["id"]: r for r in db.investigations()}
             items = [{**x, "related": [{"id": i, "name": rows[i]["name"]} for i in x["related"] if i in rows]} for x in reference.EARTH]

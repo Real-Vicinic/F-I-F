@@ -19,6 +19,24 @@ EARTH = [
      "earth_use": "Improved protective clothing", "related": []},
 ]
 
+INCIDENTS = [
+    {"id": "apollo-1", "title": "Apollo 1", "year": 1967,
+     "summary": "A fire erupted during a pre-launch test and killed the crew. An investigation followed and lessons were learned."},
+    {"id": "apollo-13", "title": "Apollo 13", "year": 1970,
+     "summary": "An oxygen tank exploded during the flight to the Moon. An investigation followed and lessons were learned."},
+    {"id": "mir-fire", "title": "Fire aboard Mir", "year": 1997,
+     "summary": "A fire caused by an oxygen generator failure erupted on the Russian space station Mir during joint operations preparing for the ISS."},
+]
+
+RESOURCES = [
+    {"title": "NASA ScienceCasts: The Power of Studying Combustion on the ISS",
+     "detail": "3.6-minute introduction to NASA combustion research on the ISS (2018).",
+     "url": "https://www.issnationallab.org/blog/nasa-sciencecasts-the-power-of-studying-combustion-on-the-iss/"},
+    {"title": "Challenge resources: Flame in Freefall",
+     "detail": "NASA Space Apps Challenge resource list for this challenge.",
+     "url": "https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=resources"},
+]
+
 GAPS = [
     {"id": "partial-gravity", "title": "No partial-gravity data in PSI",
      "detail": "LUCI and FM2 are expected to add Moon-gravity data. E-FIELD Flames mimics partial gravity with electric fields in the meantime.",
