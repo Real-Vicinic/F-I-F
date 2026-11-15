@@ -33,6 +33,7 @@ jobs:
       - run: pip install -r requirements-dev.txt
       - run: pytest -q
       - run: python scripts/migrate.py
+      - run: python scripts/seed.py
       - uses: aws-actions/setup-sam@v2
         with:
           use-installer: true
