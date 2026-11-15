@@ -1,0 +1,22 @@
+investigation_id,o2_pct,pressure_psi,airflow_cm_s,note
+bass-ii,14,,,"Approx. lowest O2 in BASS-II concurrent PMMA rod tests; range endpoint, not a single test. Source: NTRS 20150008961 (9th US Combustion Meeting)"
+bass-ii,21,,,"ISS ambient air, upper end of range; O2 reduced below 21% with N2. Source: PSI-25 summary; NTRS 20150008961"
+saffire-i,21.7,14.7,20,S1 SIBAL concurrent burn; ISS O2 reading 21.7% (PSI-98 table gives 21.5-21.7%); 1 atm. Sources: PSI-98; Combust. Flame 2018 (S0010218018304395)
+saffire-i,21.5,14.7,20,S2 SIBAL opposed-flow contingency burn; approx 21.5% O2; 1 atm. Source: PSI-98 table
+saffire-ii,22.1,14.7,20,Samples except 2-6 at 20 cm/s; initial O2 22.1% (ISS reading); 1 atm. Sources: NTRS 20170008805; Combust. Flame 2018 (S0010218018304395)
+saffire-ii,22.1,14.7,25,Sample 2-6 (SIBAL) at 25 cm/s; initial O2 22.1%; 1 atm. Sources: NTRS 20170008805; Combust. Flame 2018 (S0010218018304395)
+saffire-iii,21.2,14.7,25,SIBAL burn; O2 21.2%; 1 atm; 25 cm/s. Sources: Combust. Flame 2018 (S0010218018304395); Proc. Combust. Inst. Saffire I-III table (S154074892600324X)
+cfi,21,7.35,,Dodecane droplets in air (0.21 O2/0.79 N2) at 0.5 atm. Source: NTRS 20240003229 (CSSCI 2024)
+cfi,21,14.7,,Dodecane droplets in air at 1 atm. Source: NTRS 20240003229 (CSSCI 2024)
+cfi,21,73.48,,Dodecane droplets in air at 5 atm. Source: NTRS 20240003229 (CSSCI 2024)
+spice,,,5.4,"Lowest coflow velocity among 55 smoke points (range endpoint). Source: Dotson et al., Fire Safety J. 2011"
+spice,,,65,"Highest coflow velocity among 55 smoke points (range endpoint). Source: Dotson et al., Fire Safety J. 2011"
+slice,,,14,Coflow air case (fuel fixed at 62 cm/s); campaign ran 14-34 cm/s. Source: NTRS 20160012298
+slice,,,17,Coflow air case (fuel 17-89 cm/s). Source: NTRS 20160012298
+slice,,,34,Coflow air case (fuel fixed at 62 cm/s); campaign ran 14-34 cm/s. Source: NTRS 20160012298
+spice,20,,,"Estimated lower bound of ISS cabin O2 during SPICE (range endpoint; oxygen was not varied on purpose). Source: Dotson et al., Fire Safety J. 2011"
+spice,23,,,"Estimated upper bound of ISS cabin O2 during SPICE (range endpoint). Source: Dotson et al., Fire Safety J. 2011"
+flame-design,,7.35,,"Lower end of 0.5-2 atm range in the Flame Design (Adamant) ISS tests. Source: Fire 2023, 6(8), 285 (MDPI)"
+flame-design,,14.7,,"Normal spherical ethylene flames at atmospheric pressure. Source: Irace et al., Combust. Flame 229 (2021) 111373"
+flame-design,,29.39,,"Upper end of 0.5-2 atm range in the Flame Design (Adamant) ISS tests. Source: Fire 2023, 6(8), 285 (MDPI)"
+flame-design,40,,,"Upper limit on ambient O2 aboard ISS for these tests (safety limit, not necessarily a tested value); burner supply bottle was 85% O2. Source: Irace et al., Proc. Combust. Inst. 39 (2023)"

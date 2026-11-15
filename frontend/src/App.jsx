@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { analyze } from "./gaps.js";
 import { get } from "./api.js";
 import { DEFAULT_W } from "./rank.js";
 import Explorer from "./Explorer.jsx";
