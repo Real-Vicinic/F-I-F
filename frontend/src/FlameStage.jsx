@@ -56,11 +56,11 @@ export default function FlameStage({ busy = false, compact = false }) {
 
       <figure className="flame-fig">
         <svg viewBox="0 0 120 140" aria-hidden="true">
-          <circle className="fs-halo" cx="60" cy="70" r="30" fill="none" stroke="#ff9a3d" strokeWidth="2" />
-          <circle className="fs-micro-glow" cx="60" cy="70" r="44" fill="#ff7a1a" filter="url(#fs-soft)" />
-          <circle className="fs-breathe fs-d" cx="60" cy="70" r="34" fill="none" stroke="#ff8a1f" strokeWidth="5" />
-          <circle className="fs-breathe fs-e" cx="60" cy="70" r="26" fill="#ff7a1a" />
-          <circle className="fs-breathe fs-f" cx="60" cy="70" r="14" fill="#ffd166" />
+          <circle className="fs-halo" cx="60" cy="70" r="30" fill="none" stroke="#6db8ff" strokeWidth="2" />
+          <circle className="fs-micro-glow" cx="60" cy="70" r="44" fill="#2f7bff" filter="url(#fs-soft)" />
+          <circle className="fs-breathe fs-d" cx="60" cy="70" r="34" fill="none" stroke="#5aa9ff" strokeWidth="5" />
+          <circle className="fs-breathe fs-e" cx="60" cy="70" r="26" fill="#2f7bff" />
+          <circle className="fs-breathe fs-f" cx="60" cy="70" r="14" fill="#d6ecff" />
         </svg>
         <figcaption>Microgravity: spherical, diffusion-driven</figcaption>
       </figure>

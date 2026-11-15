@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { get } from "./api.js";
-import { Score, Fits, Tags, State } from "./ui.jsx";
+import { Score, Fits, Tags, State, FlameMark } from "./ui.jsx";
+import FlameStage from "./FlameStage.jsx";
 import Detail from "./Detail.jsx";
 import Compare from "./Compare.jsx";
 import Chat from "./Chat.jsx";
@@ -32,6 +33,13 @@ function Explorer({ picked, toggle }) {
 
   return (
     <>
+      <section className="chamber">
+        <div>
+          <h1>A flame behaves differently when nothing rises</h1>
+          <p>What NASA microgravity combustion experiments reveal about preventing, detecting and putting out fires on the ISS, the Moon and Mars.</p>
+        </div>
+        <FlameStage />
+      </section>
       <div className="chips">
         <button className={!f.scenario ? "on" : ""} onClick={() => set("scenario", "")}>All environments</button>
         {Object.entries(scn).map(([k, s]) => (
@@ -62,21 +70,33 @@ function Explorer({ picked, toggle }) {
       </div>
       <State err={err} loading={!data && !err} />
       {data && !data.items.length && <p className="dim">No investigations match these filters.</p>}
-      <div className="grid">
-        {data?.items.map((i) => (
-          <div className="card" key={i.id}>
-            <label className="pick" title="Select to compare">
-              <input type="checkbox" checked={picked.includes(i.id)} onChange={() => toggle(i.id)} /> compare
-            </label>
-            <a href={`#/i/${i.id}`}><h3>{i.name}</h3></a>
-            <p className="dim">{i.full_name}</p>
-            <Score v={i.score} />
-            <p className="meta">{i.tier} · {i.fuel_type} · {i.facility}<br />O₂: {i.o2_note || "n/a"}</p>
-            <Fits fits={i.fits} />
-            <Tags tags={i.tags} />
-          </div>
-        ))}
-      </div>
+      {data && data.items.length > 0 && (
+        <ol className="list">
+          {data.items.map((i, n) => (
+            <li className="row" key={i.id}>
+              <span className="rank">{n + 1}</span>
+              <div>
+                <a href={`#/i/${i.id}`}><h3>{i.name}</h3></a>
+                <p className="sub">{i.full_name}</p>
+                <dl className="facts">
+                  <div><dt>Fuel</dt><dd>{i.fuel_type}</dd></div>
+                  <div><dt>Facility</dt><dd>{i.facility}</dd></div>
+                  <div><dt>Oxygen</dt><dd>{i.o2_note || "n/a"}</dd></div>
+                </dl>
+                <Tags tags={i.tags} />
+              </div>
+              <div className="side">
+                <Score v={i.score} />
+                <span className={`tier ${i.tier}`}>{i.tier} relevance</span>
+                <Fits fits={i.fits} />
+                <label className="pick" title="Select to compare">
+                  <input type="checkbox" checked={picked.includes(i.id)} onChange={() => toggle(i.id)} /> Compare
+                </label>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )}
       <div className="card info">
         <h3>Partial gravity — data coming soon</h3>
         <p className="dim">PSI has no partial-gravity combustion data yet. LUCI and FM2 are expected to add Moon-gravity results; E-FIELD Flames mimics partial gravity with electric fields in the meantime.</p>
@@ -94,10 +114,12 @@ export default function App() {
 
   return (
     <div className="wrap">
-      <header>
-        <a href="#/"><h1>🔥 Flame in Freefall</h1></a>
-        <p className="dim">SI-powered fire safety insights from NASA microgravity combustion data (PSI)</p>
-        <nav><a href="#/">Explorer</a> · <a href="#/insights">Insights</a></nav>
+      <header className="bar">
+        <a className="brand" href="#/"><FlameMark />Flame in Freefall</a>
+        <nav>
+          <a href="#/" className={h === "/insights" ? "" : "on"}>Explorer</a>
+          <a href="#/insights" className={h === "/insights" ? "on" : ""}>Insights</a>
+        </nav>
       </header>
       {h === "/insights" ? <Insights /> : a ? <Compare a={a} b={b} /> : dm ? <Detail id={dm[1]} /> : <Explorer picked={picked} toggle={toggle} />}
       {picked.length === 2 && !a && (
