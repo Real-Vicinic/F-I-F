@@ -19,6 +19,12 @@ def test_routes(monkeypatch):
     assert call(monkeypatch, "GET", "/investigations", {"o2_min": "abc"})[0] == 400
 
 
+def test_meta_incidents_resources(monkeypatch):
+    s, _, b = call(monkeypatch, "GET", "/meta")
+    d = json.loads(b)
+    assert s == 200 and len(d["incidents"]) == 3 and all(r["url"].startswith("https://") for r in d["resources"])
+
+
 def test_compare(monkeypatch):
     s, _, b = call(monkeypatch, "GET", "/compare", {"ids": "bass,flex"})
     assert s == 200 and json.loads(b)["different_fields"]
