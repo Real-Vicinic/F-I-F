@@ -38,7 +38,7 @@ def test_environments_and_partial_pressure():
 
 def test_moon_base_scenario_reranks_and_filters():
     out = scoring.filter_rank(ROWS, {"scenario": "moon_base"})
-    assert {"cfi-g", "bass"} <= set(ids(out)) and "same" not in ids(out)
+    assert {"cfi-g", "bass-ii"} <= set(ids(out)) and not {"same", "bass"} & set(ids(out))
     assert [r["id"] for r in out if r["fits"]["moon_base"] == "confirmed"] == ["cfi-g", "flex-2"]
     base = next(r for r in scoring.filter_rank(ROWS, {}) if r["id"] == "cfi-g")["score"]
     assert next(r for r in out if r["id"] == "cfi-g")["score"] > base
