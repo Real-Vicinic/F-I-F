@@ -19,20 +19,37 @@ def retrieve(q, k=8):
     return db.search_chunks(" | ".join(t), k) if t else []
 
 
+DEFAULT_MODEL = "openai/gpt-oss-120b"  # llama-3.3-70b-versatile was shut down by Groq on 2026-08-16
+
+
 def _groq(messages):
+    """Returns (answer, error). answer is None when every key failed; error says why."""
     keys = [k for k in re.split(r"[,;\s]+", os.environ.get("GROQ_API_KEYS", "")) if k]
+    if not keys:
+        print("groq: GROQ_API_KEYS is empty")
+        return None, "no_keys"
+    model = os.environ.get("GROQ_MODEL") or DEFAULT_MODEL
     random.shuffle(keys)
+    err = "unknown"
     for key in keys:
         try:
             r = requests.post("https://api.groq.com/openai/v1/chat/completions",
                               headers={"Authorization": f"Bearer {key}"},
-                              json={"model": os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile"),
-                                    "messages": messages, "temperature": 0.2, "max_tokens": 600}, timeout=18)
+                              json={"model": model, "messages": messages, "temperature": 0.2,
+                                    "max_tokens": 1000, "reasoning_effort": "low"}, timeout=8)
             if r.status_code == 200:
-                return r.json()["choices"][0]["message"]["content"]
-        except requests.RequestException:
-            pass
-    return None
+                text = (r.json()["choices"][0]["message"].get("content") or "").strip()
+                if text:
+                    return text, None
+                err = "empty_response"
+                print("groq: empty content from", model)
+            else:
+                err = f"http_{r.status_code}"
+                print("groq error", r.status_code, model, r.text[:200])
+        except (requests.RequestException, ValueError, KeyError, IndexError) as e:
+            err = "request_failed"
+            print("groq exception", repr(e))
+    return None, err
 
 
 def ask(question, inv_id=None):
@@ -42,8 +59,9 @@ def ask(question, inv_id=None):
         return {"answer": "I don't know based on the indexed PSI metadata.", "citations": []}
     cites = list({c["id"] or c["name"]: {"id": c["id"], "name": c["name"]} for c in ctx}.values())
     context = "\n".join(f"[{c['name']}] {c['text']}" for c in ctx)
-    answer = _groq([{"role": "system", "content": SYSTEM},
-                    {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {question}"}])
+    answer, err = _groq([{"role": "system", "content": SYSTEM},
+                         {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {question}"}])
     if answer is None:
         answer = "SI model unavailable. Relevant indexed facts:\n" + "\n".join(f"- {c['text']}" for c in ctx[:4])
-    return {"answer": answer, "citations": cites}
+        return {"answer": answer, "citations": cites, "source": "fallback", "error": err}
+    return {"answer": answer, "citations": cites, "source": "groq"}
