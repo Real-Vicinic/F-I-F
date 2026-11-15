@@ -34,9 +34,9 @@ def test_compare(monkeypatch):
 
 def test_export(monkeypatch):
     s, ct, b = call(monkeypatch, "GET", "/export", {"format": "csv", "fuel": "solid"})
-    assert s == 200 and ct == "text/csv" and b.splitlines()[0].startswith("id,name") and len(b.splitlines()) == 6
+    assert s == 200 and ct == "text/csv" and b.splitlines()[0].startswith("id,name") and len(b.splitlines()) == 7
     s, _, b = call(monkeypatch, "GET", "/export", {"format": "json"})
-    assert len(json.loads(b)) == 20
+    assert len(json.loads(b)) == 25
     assert call(monkeypatch, "GET", "/export", {"kind": "conditions"})[0] == 200
     assert call(monkeypatch, "GET", "/export", {"format": "xml"})[0] == 400
 
