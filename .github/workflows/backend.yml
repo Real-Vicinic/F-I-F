@@ -11,6 +11,9 @@ concurrency: backend
 env:
   AWS_REGION: eu-west-1
   STAGE: prod
+  # SAM reuses the stack's previous parameter values and ignores a changed Default in template.yaml,
+  # so the model must be passed explicitly on every deploy.
+  GROQ_MODEL: openai/gpt-oss-120b
 
 jobs:
   deploy:
@@ -42,7 +45,7 @@ jobs:
           sam deploy --config-env "$STAGE" --region "$AWS_REGION"
           --no-confirm-changeset --no-fail-on-empty-changeset
           --parameter-overrides "Stage=$STAGE" "DatabaseUrl=$DATABASE_URL"
-          "GroqApiKeys=$GROQ_API_KEYS" "AllowedOrigin=*"
+          "GroqApiKeys=$GROQ_API_KEYS" "GroqModel=$GROQ_MODEL" "AllowedOrigin=*"
       - id: api
         run: |
           URL=$(aws cloudformation describe-stacks --stack-name "flame-in-freefall-$STAGE" \
@@ -52,3 +55,4 @@ jobs:
       - run: python scripts/smoke_test.py
         env:
           API_URL: ${{ steps.api.outputs.url }}
+          SMOKE_CHAT: ${{ secrets.GROQ_API_KEYS && '1' || '0' }}
