@@ -15,7 +15,7 @@
 
 - **Frontend** (`frontend/`): React + Vite, deployed to Cloudflare Pages. Talks only to the API Gateway URL (env var `VITE_API_URL`).
 - **Backend** (`backend/`): AWS SAM project — API Gateway + Python Lambdas, deployed with `sam deploy`. Reads/writes Neon over pooled connection.
-- **Database**: Neon Postgres. Schema: `investigations`, `experiments` (test runs), `conditions` (O₂ %, pressure, airflow), `safety_tags`, `embeddings` (for RAG, pgvector).
+- **Database**: Neon Postgres. Schema: `investigations`, `experiments` (test runs), `test_conditions` (O₂ %, pressure, airflow), `chunks` (text plus a generated `tsvector` column with a GIN index, used for RAG retrieval). pgvector/embeddings were planned but not used: retrieval is Postgres full-text search.
 - **Repo**: single GitHub repo, `frontend/` and `backend/` as separate top-level folders.
 
 ## Repository layout
@@ -32,7 +32,7 @@ flame-in-freefall/
 │   ├── src/
 │   │   ├── handlers/    # get_investigations, get_investigation, search, chat
 │   │   ├── db.py        # Neon connection helpers
-│   │   └── rag.py       # SI assistant logic (LLM + pgvector retrieval)
+│   │   └── rag.py       # SI assistant logic (Postgres full-text retrieval + Groq LLM)
 │   └── scripts/
 │       └── seed.py      # one-time PSI metadata ingest
 └── docs/                # MVP.md, Plan.md, Task.md live here
@@ -54,7 +54,7 @@ flame-in-freefall/
 - `GET /investigations` (list + filters + ranking)
 - `GET /investigations/{id}` (detail + similar investigations)
 - `GET /search?q=`
-- `POST /chat` (RAG: retrieve top-k investigation chunks via pgvector → LLM prompt → grounded answer)
+- `POST /chat` (RAG: retrieve top-k investigation chunks via Postgres full-text search → Groq LLM prompt → grounded answer)
 - CORS for the Cloudflare Pages origin
 
 **Phase 3 — Frontend (hour 9–16)**
@@ -78,10 +78,11 @@ flame-in-freefall/
 |---|---|
 | PSI raw data too large/noisy for hackathon | Use curated metadata subset; link out to PSI for raw downloads |
 | LLM hallucination in SI answers | RAG with strict grounding: answer only from retrieved chunks, cite investigation names, "I don't know" fallback |
+| Groq model retired or key invalid (the assistant silently drops to the fallback list) | Pin the model in `template.yaml` (`GroqModel`), watch Groq's deprecation page, keep several keys in `GROQ_API_KEYS`, and make the smoke test fail when `/chat` is not answered by Groq |
 | Cold-start latency on Lambda + Neon | Neon pooled connection in init; keep Lambda memory ≥ 512 MB |
 | CORS / env var mismatch between Pages and API | Single `.env.example` per folder, deploy checklist in README |
 
-## CI/CD & environment profiles (GitHub-driven)
+## CI/CD & environment profiles (GitHub-driven) — original plan
 
 Everything deploys from GitHub — no manual deploys from laptops. Two environment profiles:
 
@@ -97,6 +98,25 @@ Everything deploys from GitHub — no manual deploys from laptops. Two environme
 - **`.github/workflows/database.yml`** — manual-dispatch workflow for migrations + idempotent `seed.py` against a chosen Neon branch (useful for refreshing data without a code deploy).
 - **Frontend** — Cloudflare Pages' native GitHub integration builds `frontend/` on every push: a preview deployment per PR, production on `main`. No workflow file needed; env vars set per environment in the Cloudflare dashboard so preview builds point at the dev API and production at the prod API.
 - **Deploy order & compatibility** — migrations run before the backend deploy; frontend deploys are independent, and the API stays backward-compatible with slightly older frontends so deploy order never breaks the site.
+
+### As implemented
+
+The workflows in `.github/workflows/` differ from the plan above:
+
+- **Auth:** `backend.yml` and `frontend.yml` use repository secrets `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` (not OIDC roles) and read `NEON_DATABASE_URL` from repository secrets (not per-environment secrets).
+- **Branches:** `backend.yml` and `frontend.yml` deploy on pushes to `main` only, with `STAGE=prod`. There is no `develop`/dev stack in the workflows yet.
+- **Frontend:** `frontend.yml` builds with `VITE_API_URL` read from the deployed CloudFormation stack and publishes to Cloudflare Pages with wrangler (project `flame-in-freefall`).
+- **Database:** `database.yml` (migrations + seed) and `PSI-seed.yml` (migrations, seed, optional conditions import) are manual-dispatch.
+- **Groq:** `GROQ_API_KEYS` is passed to the Lambda on every `sam deploy`, so an empty or missing secret disables the assistant on the next deploy.
+
+## SI assistant (Groq)
+
+- **Flow:** `POST /chat` → `rag.ask()` → Postgres full-text retrieval (`chunks.tsv`, top 8, or all chunks of one investigation when `investigation_id` is given) → Groq chat completion with a system prompt that allows answers only from the retrieved context and requires `[INVESTIGATION]` citations → response `{answer, citations}`.
+- **Configuration:** `GROQ_API_KEYS` (keys separated by `;`, `,` or whitespace; tried in random order until one returns 200) and `GROQ_MODEL`. In AWS, `GROQ_MODEL` is set from the `GroqModel` parameter in `backend/template.yaml`, which overrides the default in `backend/src/rag.py`; change the model in the template.
+- **Model history:** the project started on `llama-3.3-70b-versatile`. Groq retired it on 16 Aug 2026 for free and developer-tier accounts (recommended replacements: `openai/gpt-oss-120b`, `qwen/qwen3.6-27b`), after which every request failed and the assistant showed only the fallback list. The current model is `openai/gpt-oss-120b`.
+- **Fallback behaviour:** if every key fails, the answer is "SI model unavailable. Relevant indexed facts:" followed by up to four retrieved chunks, with citations. Errors are not logged in the original `rag.py`, which is why the outage was hard to spot.
+- **Reasoning models:** `gpt-oss` models spend part of the token budget on reasoning, so keep `max_tokens` generous (1000 or more) and treat an empty reply as a failure.
+- **Timeouts:** Lambda is limited to 25 s and API Gateway to 29 s. Keep the per-key Groq timeout short (8 s) so a few dead keys cannot exceed the limit.
 
 ## Post-hackathon roadmap
 
