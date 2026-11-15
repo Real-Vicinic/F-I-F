@@ -3,7 +3,7 @@ import db, rag, reference, scoring
 
 CORS = {"Access-Control-Allow-Origin": os.environ.get("ALLOWED_ORIGIN", "*"),
         "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Allow-Methods": "GET,POST,OPTIONS"}
-EXPORT = ["id", "name", "full_name", "family", "tier", "fuel_type", "fuels", "fuel_geometry", "hardware", "facility", "o2_min", "o2_max",
+EXPORT = ["id", "name", "psi_id", "full_name", "family", "tier", "fuel_type", "fuels", "fuel_geometry", "hardware", "facility", "o2_min", "o2_max",
           "o2_note", "pressure_psi", "airflow", "gravity", "variables", "sensors", "tags", "informs", "prevention", "detection",
           "suppression", "score", "source_url"]
 
