@@ -1,4 +1,4 @@
-"""Post-deploy / scheduled smoke test. Usage: API_URL=https://... python smoke_test.py  (SMOKE_CHAT=1 also tests /chat)"""
+"""Post-deploy / scheduled smoke test. Usage: API_URL=https://... python smoke_test.py  (SMOKE_CHAT=1 also tests /chat and requires a real Groq answer)"""
 import json, os, sys, time, urllib.error, urllib.request
 
 BASE = (os.environ.get("API_URL") or (sys.argv[1] if len(sys.argv) > 1 else "")).rstrip("/")
@@ -84,6 +84,8 @@ def t_cors():
 def t_chat():
     d = js("/chat", method="POST", body={"question": "Which investigations inform smoke detection?"})
     assert d["answer"] and d["citations"]
+    # the offline fallback also returns an answer, so require the model to have actually answered
+    assert d.get("source") == "groq", f"Groq did not answer: source={d.get('source')} error={d.get('error')}"
 
 
 for name, fn in [("health", lambda: js("/health")["ok"]), ("list >= 20", t_list), ("list latency < 2s", t_latency),
