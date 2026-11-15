@@ -6,7 +6,8 @@ STOP = set("the a an of and or to in on for is are was were which what how why t
            "tests test experiments experiment investigations investigation ran run".split())
 SYSTEM = ("You are the SI assistant for a NASA microgravity combustion fire-safety dashboard. Answer ONLY from the provided context. "
           "Cite investigation names in square brackets, e.g. [BASS]. If the context does not contain the answer, say you don't know "
-          "based on the indexed data. If a value is not specified in the context, say so. Be concise.")
+          "based on the indexed data. If a value is not specified in the context, say so. Be concise. "
+          "When asked which or how many items match, answer for the retrieved context and do not claim they are the only ones in the data.")
 
 
 def terms(q):
